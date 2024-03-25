@@ -1,0 +1,122 @@
+---
+title: "Case Study 1 AKSTA Statistical Computing"
+author:
+  - Hanna Kienast
+  - Iulia Mihaela Enache
+  - Kateryna Ponomarenko
+output: pdf_document
+date: "2024-03-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+### a) Using for loop
+We will add the check if the given number is positive integer and equals at least 1.
+
+Then we create numeric vector filled with NA of length n + 1 to store numbers of Fibonacci sequence there and initialize first two Fibonacci numbers.
+
+In the case n is 2, we return ratio of 2 first numbers, else we calculate in a loop all numbers of sequence up to n + 1 inclusively.
+
+We initialize numeric vector of length n to store ratios and calculate in a loop final results.
+
+```{r}
+for_impl_fib_ratio <- function(n) {
+  if (!is.integer(n) || n < 2) {
+    stop("n must be a positive integer greater than or equal to 2")
+  }
+  
+  fib <- numeric(n + 1)
+  fib[1:2] <- 1
+  
+  for (i in 3:(n + 1)) {
+    fib[i] <- fib[i - 1] + fib[i - 2]
+  }
+  
+  r <- numeric(n)
+  for (i in 1:n) {
+    r[i] <- fib[i + 1] / fib[i]
+  }
+  
+  return(r)
+}
+
+print(for_impl_fib_ratio(4L))
+```
+
+
+### a) Using while loop
+Rewriting the function to use while loop by setting conditions for 2 while loops and updating i variable in each loop.
+```{r}
+while_impl_fib_ratio <- function(n) {
+  if (!is.integer(n) || n < 2) {
+    stop("n must be a positive integer greater than or equal to 2")
+  }
+  
+  fib <- numeric(n + 1)
+  fib[1:2] <- 1
+  
+  if (n == 2) {
+    return(fib[2] / fib[1]) 
+  }
+  
+  i <- 3
+  while(i <= (n + 1)) {
+    fib[i] <- fib[i - 1] + fib[i - 2]
+    i <- i + 1
+  }
+  
+  r <- numeric(n)
+  
+  i <- 1
+  while(i <= n) {
+    r[i] <- fib[i + 1] / fib[i]
+    i <- i + 1
+  }
+  
+  return(r)
+}
+
+print(for_impl_fib_ratio(4L))
+```
+### b) Using microbenchmark function
+It was decided to run evaluation for each function 1000 times
+```{r}
+library(microbenchmark)
+
+benchmark_200 <- microbenchmark(
+  for_loop = for_impl_fib_ratio(200L),
+  while_loop = while_impl_fib_ratio(200L),
+  times = 1000L
+)
+
+benchmark_2000 <- microbenchmark(
+  for_loop = for_impl_fib_ratio(2000L),
+  while_loop = while_impl_fib_ratio(2000L),
+  times = 1000L
+)
+
+print(benchmark_200)
+
+print(benchmark_2000)
+```
+Conclusion: we can summarize that for loop is more efficient, while the mean and median execution time are lower than these indicators for while loop. It may be because in for loop, we don't need to initialize counter variable and update it manually. However, we noticed, that in case n = 2000 the max execution time of for loop is greater than while loop`s time. We think, that potential reason might be some external factors, for example system load or CPU usage. But mean and median are more indicative for execution time distribution analysis, so we conclude the better efficiency of for loop. 
+
+### c) 
+We will plot sequence for n = 100 to see, where is stabilizes
+```{r}
+# Call the function for n = 100
+seq <- for_impl_fib_ratio(100L)
+
+# Plot the sequence
+plot(seq, type = "l", xlab = "n", ylab = "r_i", main = "Fibonacci Ratios (n = 100)")
+
+```
+We see, that sequence stabilizes roughly at n = 10, we can zoom in this sector of the plot to detect the preciser number.
+```{r}
+plot(seq, type = "l", xlab = "n", ylab = "r_i", main = "Fibonacci Ratios (n = 100)", xlim = c(1, 11))
+
+```
+As we can see, ratios converge to the value $\approx$ 1.6, starting from the n $\approx$ 5 and stabilizing more from n $\approx$ 8.
