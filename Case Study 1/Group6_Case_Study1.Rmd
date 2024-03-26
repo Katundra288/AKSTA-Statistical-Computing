@@ -127,7 +127,7 @@ First attempt to implement the function with the usage of recursion wasn't succe
 
 We define the helper function inside of main function, which is recursive and calculates the Fibonacci numbers with memoization using the environment. We define base cases for n = 0 (calculate $\phi^1$) and n = 1 (calculate $\phi^2$), which is $\frac{\sqrt{5} + 1}{2}$ and $(\frac{\sqrt{5} + 1}{2})^2 = \frac{\sqrt{3} + 1}{2}$ correspondingly. Then we calculate recursively all following element of the sequence. Also, we check if n is integer that equals at least to 1.
 
-Our both functions will return $\phi^(n + 1)$ (if n = 1, we calculate $\phi^2$). 
+Our both functions will return $\phi^{(n + 1)}$ (if n = 1, we calculate $\phi^2$). 
 
 ```{r}
 recursion_golden_ratio <- function(n = 1000L) {
