@@ -200,3 +200,50 @@ cat("Comparison with all.equal function:\n", comparison_all_equal, "\n")
 ```
 
 In the result, we observe that comparison with == outputs inequality, while comparison with all.equal - visa versa. The reason is likely due to floating-point precision. Since == operator performs an exact comparison, small differences in representation of numbers may be influence the output.  On the other hand, the all.equal compares numeric vectors with some tolerance to differences in floating-point values.
+
+## Task 4
+### The game of craps 
+We will define the separate function to simulate rolling the six-sided die by using sample() function, which will chose a random integer between 1 and 6 inclusively.
+
+Two first cases of rolling 1 (losing) or 6 (winning) are done by control flow if and else if statements. In the third case of rolling 2, 3, 4 or 5 (else statement) the loop does 3 iterations and breaks returning message about the victory if point number was rolled before or on the 3rd iteration. 
+
+In the case of failing to roll the point number through all 3 attempts, the message about the loss is returned. Some additional outputs about current attempt and obtained number were added.  
+
+```{r, results='hold'}
+roll_die <- function() {
+  sample(1:6, 1)
+}
+
+play_game_of_craps <- function() {
+  roll <- roll_die()
+  
+  if (roll == 6) {
+    return("You got 6 ---> You win!")
+  } else if (roll == 1) {
+    return("You got 1 ---> You lose!")
+  } else {
+    point_num <- roll
+    cat("You got point number ", point_num, 
+        ". You have three tries to roll it one more time \n")
+    for (i in 1:3) {
+      cat("This is try ",i, " ")
+      roll <- roll_die()
+      
+      cat("You got ", roll, "\n")
+      
+      if (roll == point_num) {
+        return(paste("You got the point number of this round", 
+                     point_num, "on the try", i, "---> You win!", sep = " "))
+      }
+    }
+        return(paste("You didn't get the point number of this round", 
+                     point_num, "---> You lose!", sep = " "))
+  }
+}
+```
+
+
+```{r, results='hold'}
+game_res <- play_game_of_craps()
+print(game_res)
+```
