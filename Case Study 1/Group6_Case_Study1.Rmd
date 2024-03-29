@@ -121,6 +121,53 @@ plot(seq, type = "l", xlab = "n", ylab = "r_i", main = "Fibonacci Ratios (n = 10
 ```
 As we can see, ratios converge to the value $\approx$ 1.6, starting from the n $\approx$ 5 and stabilizing more from n $\approx$ 8.
 
+## 2. Gamma Function
+
+# a.
+Write a function to compute the following for n a positive integer using the gamma function in base R.
+rho_n = gamma((n-1)/2)/(gamma(1/2)*gamma((n-2)/2))
+```{r, echo=TRUE}
+gamma_fct <- function(n) {
+  rho_n <- gamma((n-1)/2) / (gamma(1/2)*gamma((n-2)/2))
+  return (rho_n)
+}
+```
+
+# b.
+Try n = 2000. What do you observe? Why do you think the observed behavior happens?
+```{r, echo=TRUE}
+print(gamma_fct(2000))
+
+x <- seq(1, 2000, by = 100)
+y <- gamma_fct(x)
+plot(x, y, type = "l", col = "blue", lwd = 2, main = "Gamma Function", xlab = "x", ylab = "gamma_fct(x)")
+
+```
+
+We can try for several lower n and see that from around 340 on we only get NaNs. This might happen due to numerical precision issues computing the gamma function for very large values (given gamma(n) = (n-1)!). Useing the lgamma function might help overcoming this issue. It returns the natural logarithm of the absolute value of the gamma function. We would only need to use the exponential function for the final result.
+
+# c.
+Write an implementation which can also deal with large values of n > 1000.
+```{r, echo=TRUE}
+# Function to compute the gamma function using logarithmic form
+lgamma_fct <- function(n) {
+  rho_n <- lgamma((n-1)/2) / (lgamma(1/2)*lgamma((n-2)/2))
+  return (exp(rho_n))
+}
+
+print(lgamma_fct(1000))
+print(lgamma_fct(2000))
+```
+
+# d.
+Plot rho_n/sqrt(n) for different values of n. Can you guess the limit of rho_n/sqrt(n) for n -> inf?
+```{r, echo=TRUE}
+x <- seq(1, 2000, by = 100)
+y <- lgamma_fct(x)/sqrt(x)
+plot(x, y, type = "l", col = "blue", lwd = 2, main = "Gamma Function", xlab = "x", ylab = "rho_n/sqrt(n)")
+```
+We can see that for large values of x (or n) the function converges to 0.
+
 ## Task 3
 ### a) Using recursion
 First attempt to implement the function with the usage of recursion wasn't successful, because for n values greater than 100, the execution time turned out to be hours. Due to that, we decided to use memoization technique to optimize our code.
@@ -246,4 +293,74 @@ play_game_of_craps <- function() {
 ```{r, results='hold'}
 game_res <- play_game_of_craps()
 print(game_res)
+```
+
+## 5. Readable and efficient code
+
+# a.
+Explain (in text) what the code does.
+First, a seed is set (for reproducibility). It generates values for vectors x and y, whereas x are random values from a normal distribution and y is a linear combination of x and an intercept and other random values.
+Then a dataframe is created out of those. 
+The line "cat(...)" would print the word "Step" and then the number of the step. The next steps are done for subsets of the data:
+A linear regression model "lm" is fit on one subset of the data. Predictions are computed for y values (using another subset of the data). The RMSE value between the true y values and the predictions is computed and stored in the vector r.
+After all is done for the 4 subsets the vector r with all RMSE values is returned.
+
+```{r, echo=TRUE}
+set.seed(1)
+x <- rnorm(1000)
+y <- 2 + x + rnorm(1000)
+df <- data.frame(x, y)
+
+cat("Step", 1, "\n")
+fit1 <- lm(y ~ x, data = df[-(1:250),])
+p1 <- predict(fit1, newdata = df[(1:250),])
+r <- sqrt(mean((p1 - df[(1:250),"y"])^2))
+
+cat("Step", 2, "\n")
+fit2 <- lm(y ~ x, data = df[-(251:500),])
+p2 <- predict(fit2, newdata = df[(251:500),])
+r <- c(r, sqrt(mean((p2 - df[(251:500),"y"])^2)))
+
+cat("Step", 3, "\n")
+fit3 <- lm(y ~ x, data = df[-(501:750),])
+p3 <- predict(fit3, newdata = df[(501:750),])
+r <- c(r, sqrt(mean((p3 - df[(501:750),"y"])^2)))
+
+cat("Step", 4, "\n")
+fit4 <- lm(y ~ x, data = df[-(751:1000),])
+p4 <- predict(fit4, newdata = df[(751:1000),])
+r <- c(r, sqrt(mean((p4 - df[(751:1000), "y"])^2)))
+
+r
+
+
+```
+
+# b.
+Explain (in text) what you would change to make the code more readable.
+I would put everything in a loop.
+
+# c.
+Change the code according to a. and wrap it in a function. This function should have at most 10 lines
+(without adding commands to more lines such as x <- 1; y <- 2. Such commands will count as 2 lines!).
+Check that the function called on the same input outputs the same as the provided code.
+
+```{r, echo=TRUE}
+rmse_lm <- function(x,y) {
+  df <- data.frame(x,y)
+  r <- numeric()
+  for (i in seq(1, 1000, by = 250)) {
+    fit <- lm(y ~ x, data = df[-(i:(i+249)), ])
+    p <- predict(fit, newdata = df[(i:(i+249)), ])
+    r <- c(r, sqrt(mean((p-df[(i:(i+249)), "y"])^2)))
+  }
+  return(r)
+}
+
+set.seed(1)
+x <- rnorm(1000)
+y <- 2 + x + rnorm(1000)
+computed_r <- rmse_lm(x, y)
+computed_r
+
 ```
