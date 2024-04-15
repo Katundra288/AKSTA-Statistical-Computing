@@ -379,44 +379,32 @@ kwtest <- function (x, g, ...)
     if (!all(sapply(x, is.numeric)))
       warning("some elements of 'x' are not numeric and will be coerced to numeric")
     k <- length(x)
-    # Store length for each group
     l <- lengths(x)
     if (any(l == 0L))
       stop("all groups must contain data")
-    # Create factor 'g' based on lengths of 'x'
     g <- factor(rep.int(seq_len(k), l))
-    # Unlist 'x' to create a single numeric vector
     x <- unlist(x)
   }
   else {
     if (length(x) != length(g))
       stop("'x' and 'g' must have the same length")
     g <- factor(g)
-    # Determine the number of levels in 'g'
     k <- nlevels(g)
-    # Check if there are at least 2 groups
     if (k < 2L)
       stop("all observations are in the same group")
   }
-  # Determine the number of observations
   n <- length(x)
   if (n < 2L)
     stop("not enough observations")
-  # Compute ranks of the observations
   r <- rank(x)
-  # Count the number of ties
   TIES <- table(x)
-  # Compute the Kruskal-Wallis test statistic
   STATISTIC <- sum(tapply(r, g, sum)^2/tapply(r, g, length))
   STATISTIC <- ((12 * STATISTIC/(n * (n + 1)) - 3 * (n + 1))/(1 -
     sum(TIES^3 - TIES)/(n^3 - n)))
-  # Determine the degrees of freedom
   PARAMETER <- k - 1L
-  # Compute the p-value
   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
   names(STATISTIC) <- "Kruskal-Wallis chi-squared"
   names(PARAMETER) <- "df"
-   # Create a list containing the test results
   RVAL <- list(statistic = STATISTIC, parameter = PARAMETER,
     p.value = PVAL, method = "Kruskal-Wallis rank sum test")
   return(RVAL)
@@ -451,8 +439,8 @@ kwtest(x, g, ...):
     Compute the ranks of the observations (r)
     Count the number of ties (TIES)
     Calculate the Kruskal-Wallis test statistic
-      - Calculate the sum of squared ranks for each group.
-      - Use the formula: STATISTIC = (12 * sum(group_sums^2) / (n * (n + 1)) - 3 * (n + 1)) / (1 - sum(TIES^3 - TIES) / (n^3 - n))
+        Calculate the sum of squared ranks for each group.
+        STATISTIC = (12 * sum(group_sums^2) / (n * (n + 1)) - 3 * (n + 1)) / (1 - sum(TIES^3 - TIES) / (n^3 - n))
     Calculate the degrees of freedom (PARAMETER) for the test 
     Calculate the p-value (PVAL) using the chi-squared distribution
     Create a list (RVAL) containing the following test results
@@ -487,53 +475,49 @@ identical(result_list, result_vector)
 ```
 
 ### c.
+We firstly do some checks on the input data: x and g. X has to be numeric and g can or not be a factor (we are converting it anyways into a factor to be sure. Then we do further checking on their lengths.
+We are simplifying the test statistic formula by calculating it following the mathematical definition.
+The computations of observations' ranks and their sum for each group stay the same.
+The test statistics important points:
+- 12 / (n * (n + 1)) normalizes test statistic for different sample sizes
+- sum(group_sums^2 / table(g)) calculates the sum of squared ranks for each group and sums them across all. 
+- sum((TIES^3 - TIES) / (n^3 - n)) is used for correction of ties
+- ...- 3 * (n + 1) * (1 - ...) accounts for the sample size and corrects for ties
+
 
 ```{r}
 
 kwtest_fast <- function(x, g) {
-  # Check if x is numeric
   if (!is.numeric(x)) {
     stop("Input 'x' must be numeric")
   }
   
   g <- factor(g)
   
-  # Check if x and g have the same length
   if (length(x) != length(g)) {
     stop("Input 'x' and 'g' must have the same length.")
   }
   
-  # Check if there are at least 2 groups
   if (nlevels(g) < 2L)
     stop("all observations are in the same group")
   
   n <- length(x)
-  #Check if we have enough observations
   if (n < 2L)
     stop("not enough observations")
 
-  
-  # Compute ranks of the observations
   r <- rank(x)
   
-  # Compute the sum of squared ranks for each group
   group_sums <- tapply(r, g, sum)
   
-  # Compute the number of ties
   TIES <- table(x)
   
-  # Calculate the Kruskal-Wallis test statistic
-  # We optimize the code structure and unnecessary operations
-  STATISTIC <- (12 * sum(group_sums^2) / (n * (n + 1)) - 3 * (n + 1)) / 
-                (1 - sum(table(x)^3 - table(x)) / (n^3 - n))
+  STATISTIC <- (12 / (n * (n + 1))) * sum(group_sums^2 / table(g))
+  STATISTIC <- STATISTIC - 3 * (n + 1) * (1 - sum((TIES^3 - TIES) / (n^3 - n)))
   
-  # Calculate the degrees of freedom
   PARAMETER <- length(unique(g)) - 1L
   
-  # Calculate the p-value using the chi-squared distribution
   PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
   
-  # Return the test statistic, degrees of freedom, and p-value
   return(list(statistic = STATISTIC, parameter = PARAMETER,
               p.value = PVAL, method = "Kruskal-Wallis rank sum test"))
 }
@@ -542,24 +526,20 @@ kwtest_fast <- function(x, g) {
 ```
 
 ### d.
+We iterate over each row, where each represent an experiment, in the matrix X. We perform the test using the stats:::kruskal.test.default for each row and store its test statistic.  These statistics are collected into a vector, where each element corresponds to the test statistic for the respective row index.
 
 ```{r}
 
 kruskal_wallis_test <- function(X, g) {
-  # Initialize vector to store test statistics
   test_statistics <- numeric(length = nrow(X))
 
-  # for each experiment
   for (i in 1:nrow(X)) {
 
-    # Perform Kruskal-Wallis test
     result <- stats:::kruskal.test.default(X[i, ], g = factor(g))
     
-    # Store the test statistic
     test_statistics[i] <- result$statistic
   }
   
-  # Return vector of test statistics
   return(test_statistics)
 }
 
@@ -571,8 +551,8 @@ kruskal_wallis_test <- function(X, g) {
 ```{r}
 
 set.seed(1234)
-m <- 1000  # Number of repetitions
-n <- 50    # Number of individuals per experiment
+m <- 1000  
+n <- 50   
 X <- matrix(rt(m * n, df = 10), nrow = m)
 grp <- rep(1:3, c(20, 20, 10))
 
@@ -584,25 +564,20 @@ test_statistics
 
 
 ### e.
-
+Here we do the same approach as in the previous point. The difference is that we use our own function kwtest_fast instead of the stats:::kruskal.test.default one. 
 ```{r}
 
 
 kruskal_wallis_test_fast <- function(X, g) {
-  # Initialize vector to store test statistics
   test_statistics <- numeric(length = nrow(X))
 
-  # for each experiment
   for (i in 1:nrow(X)) {
 
-    # Perform Kruskal-Wallis test
     result <- kwtest_fast(X[i, ], g = factor(g))
     
-    # Store the test statistic
     test_statistics[i] <- result$statistic
   }
   
-  # Return vector of test statistics
   return(test_statistics)
 }
 
@@ -621,18 +596,15 @@ Based on these metrics, the first technique performs better in terms of executio
 
 library(bench)
 
-# Define the functions to benchmark
 f1 <- function() kruskal_wallis_test(X, grp)
 f2 <- function() kruskal_wallis_test_fast(X, grp)
 
-# Run the benchmark
 bench_results <- mark(
   kruskal_wallis = f1(),
   kwtest_fast = f2(),
   check = FALSE
 )
 
-# Print the benchmark results
 print(bench_results)
 
 
@@ -640,7 +612,7 @@ print(bench_results)
 
 
 ### g.
-
+The function kwtest_fast from point c.seems to be already efficient without needing further vectorization. The function steps operate on vectors and factors and utilize vectorized functions such as tapply, sum, table, rank, without using any unnecessary iterations. Therefore, it manages to maintain readability and good performance. 
 ```{r}
 
 
