@@ -12,9 +12,9 @@ date: "2024-03-25"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Task 1
-### a) Using for loop
-We will add the check if the given number is positive integer and equals at least 2.
+## 1.  Ratio of Fibonacci numbers
+### a. 
+Using for loop: we will add the check if the given number is positive integer and equals at least 2.
 
 Then we create numeric vector filled with NA of length n + 1 to store numbers of Fibonacci sequence there and initialize first two Fibonacci numbers.
 
@@ -46,9 +46,7 @@ for_impl_fib_ratio <- function(n) {
 print(for_impl_fib_ratio(4L))
 ```
 
-
-### a) Using while loop
-Rewriting the function to use while loop by setting conditions for 2 while loops and updating i variable in each loop.
+Using while loop: rewriting the function to use while loop by setting conditions for 2 while loops and updating i variable in each loop.
 ```{r}
 while_impl_fib_ratio <- function(n) {
   if (!is.integer(n) || n < 2) {
@@ -81,8 +79,8 @@ while_impl_fib_ratio <- function(n) {
 
 print(for_impl_fib_ratio(4L))
 ```
-### b) Using microbenchmark function
-It was decided to run evaluation for each function 1000 times
+### b. 
+Using microbenchmark function: it was decided to run evaluation for each function 1000 times
 ```{r}
 library(microbenchmark)
 
@@ -104,7 +102,7 @@ print(benchmark_2000)
 ```
 Conclusion: we can summarize that for loop is more efficient, while the mean and median execution time are lower than these indicators for while loop. It may be because in for loop, we don't need to initialize counter variable and update it manually. However, we noticed, that in case n = 2000 the max execution time of for loop is greater than while loop`s time. We think, that potential reason might be some external factors, for example system load or CPU usage. But mean and median are more indicative for execution time distribution analysis, so we conclude the better efficiency of for loop. 
 
-### c) 
+### c.
 We will plot sequence for n = 100 to see, where is stabilizes
 ```{r}
 # Call the function for n = 100
@@ -123,7 +121,7 @@ As we can see, ratios converge to the value $\approx$ 1.6, starting from the n $
 
 ## 2. Gamma Function
 
-# a.
+### a.
 Write a function to compute the following for n a positive integer using the gamma function in base R.
 rho_n = gamma((n-1)/2)/(gamma(1/2)*gamma((n-2)/2))
 ```{r, echo=TRUE}
@@ -133,7 +131,7 @@ gamma_fct <- function(n) {
 }
 ```
 
-# b.
+### b.
 Try n = 2000. What do you observe? Why do you think the observed behavior happens?
 ```{r, echo=TRUE}
 print(gamma_fct(2000))
@@ -141,7 +139,7 @@ print(gamma_fct(2000))
 
 We can try for several lower n and see that from around 340 on we only get NaNs. This might happen due to numerical precision issues computing the gamma function for very large values (given gamma(n) = (n-1)! reaches very high values very quickly). Using the lgamma function might help overcoming this issue. It returns the natural logarithm of the absolute value of the gamma function. We would only need to use the exponential function for the final result.
 
-# c.
+### c.
 Write an implementation which can also deal with large values of n > 1000.
 ```{r, echo=TRUE}
 # Function to compute the gamma function using logarithmic form
@@ -154,7 +152,7 @@ print(lgamma_fct(1000))
 print(lgamma_fct(2000))
 ```
 
-# d.
+### d.
 Plot rho_n/sqrt(n) for different values of n. Can you guess the limit of rho_n/sqrt(n) for n -> inf?
 ```{r, echo=TRUE}
 x <- seq(1, 2000, by = 100)
@@ -163,9 +161,9 @@ plot(x, y, type = "l", col = "blue", lwd = 2, main = "Gamma Function", xlab = "n
 ```
 We can see that for large values of x (or n) the function converges to 0.
 
-## Task 3
-### a) Using recursion
-First attempt to implement the function with the usage of recursion wasn't successful, because for n values greater than 100, the execution time turned out to be hours. Due to that, we decided to use memoization technique to optimize our code.
+## 3. The golden ratio
+### a.
+Using recursion: first attempt to implement the function with the usage of recursion wasn't successful, because for n values greater than 100, the execution time turned out to be hours. Due to that, we decided to use memoization technique to optimize our code.
 
 We define the helper function inside of main function, which is recursive and calculates the Fibonacci numbers with memoization using the environment. We define base cases for n = 0 (calculate $\phi^1$) and n = 1 (calculate $\phi^2$), which is $\frac{\sqrt{5} + 1}{2}$ and $(\frac{\sqrt{5} + 1}{2})^2 = \frac{\sqrt{3} + 1}{2}$ correspondingly. Then we calculate recursively all following element of the sequence. Also, we check if n is integer that equals at least to 1.
 
@@ -205,8 +203,8 @@ recursion_golden_ratio(100L)
 
 ```
 
-### b) Using power operator 
-Add the same check condition and simply return power n + 1 of $\phi$
+### b. 
+Using power operator: add the same check condition and simply return power n + 1 of $\phi$
 ```{r}
 power_golden_ratio <- function(n) {
   if (!is.integer(n) || n < 0) {
@@ -220,7 +218,7 @@ power_golden_ratio <- function(n) {
 power_golden_ratio(100L)
 ```
 
-### c) 
+### c.
 We will use sapply function to apply defined functions to 4 specified values and store them in vectors. 
 
 While comparing values with ==, we create logical vector, where TRUE indicates that the values are exactly equal, FALSE otherwise.
@@ -243,8 +241,7 @@ cat("Comparison with all.equal function:\n", comparison_all_equal, "\n")
 
 In the result, we observe that comparison with == outputs inequality, while comparison with all.equal - visa versa. The reason is likely due to floating-point precision. Since == operator performs an exact comparison, small differences in representation of numbers may be influence the output.  On the other hand, the all.equal compares numeric vectors with some tolerance to differences in floating-point values.
 
-## Task 4
-### The game of craps 
+## 4. Game of craps
 We will define the separate function to simulate rolling the six-sided die by using sample() function, which will chose a random integer between 1 and 6 inclusively.
 
 Two first cases of rolling 1 (losing) or 6 (winning) are done by control flow if and else if statements. In the third case of rolling 2, 3, 4 or 5 (else statement) the loop does 3 iterations and breaks returning message about the victory if point number was rolled before or on the 3rd iteration. 
@@ -292,7 +289,7 @@ print(game_res)
 
 ## 5. Readable and efficient code
 
-# a.
+### a.
 Explain (in text) what the code does.
 First, a seed is set (for reproducibility). It generates values for vectors x and y, whereas x are random values from a normal distribution and y is a linear combination of x and an intercept and other random values.
 Then a dataframe is created out of those. 
@@ -331,11 +328,11 @@ r
 
 ```
 
-# b.
+### b.
 Explain (in text) what you would change to make the code more readable.
 I would put everything in a loop, given that we do the same thing 4 times with only different parts of the dataset. A for-loop is suitable, as we know the number of iterations.
 
-# c.
+### c.
 Change the code according to a. and wrap it in a function. This function should have at most 10 lines
 (without adding commands to more lines such as x <- 1; y <- 2. Such commands will count as 2 lines!).
 Check that the function called on the same input outputs the same as the provided code.
