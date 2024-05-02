@@ -27,11 +27,12 @@ rawdata_343.txt which contains the (estimated) median age per country. Pay atten
  corresponding function. It might also be useful to use tidyr functions to unite some columns back or
  separate them.
 ```{r, echo=TRUE}
-'library(readr)
+library(readr)
 library(tidyr)
 library(dplyr)
 library(readxl)
-library(data.table)'
+library(data.table)
+require(stringr)
 ```  
  
 ```{r, echo=TRUE}
@@ -98,32 +99,64 @@ data-codes/ and load it into R.
 
 ```{r, echo=TRUE}
 #using read.csv
-country_code <- read.csv("Country Data Codes.csv", sep = ",", quote = "", stringsAsFactors = FALSE, header = TRUE, fill=TRUE)
-country_code
+#country_code <- read.csv("Country Data Codes.csv", sep = ",", quote = "", stringsAsFactors = FALSE, header = TRUE, fill=TRUE)
+#country_code
 
 #using read_csv
-country_code <- read_csv("Country Data Codes.csv")
-country_code
+#country_code <- read_csv("Country Data Codes.csv", col_types = , show_col_types = FALSE,   trim_ws = TRUE)
+#country_code
 
 #using fread
-country_code <- fread("Country Data Codes.csv", sep = ",", quote="", header = TRUE, fill=TRUE)
-country_code
+country_code <- fread("Country Data Codes.csv", sep = ",", header = TRUE, fill=TRUE, stringsAsFactors = FALSE, quote = "")
+names(country_code)[names(country_code) == 'ISO 3166'] <- 'ISO'
+names(country_code)[names(country_code) == 'Name'] <- 'Country'
 
+#new idea - merge columns when col2 contains country name data
+country_code <- country_code %>%
+  mutate(
+    Country = ifelse(
+      str_detect(GENC, "[a-z]"),  # check for lowercase letters
+      paste(Country, GENC, sep = ", "),  # Concatenate Name and GENC if condition is true
+      Country  # Keep NAme
+    ),
+    GENC = ifelse(
+      str_detect(GENC, "[a-z]"),
+      NA,  # Clear GENC if merged
+      GENC
+    )
+  )
+
+#happy bc we only need Name and ISO columns so i dont have to shift the others
+
+country_code <- country_code[, c("Country", "ISO")]
+
+country_code <- country_code %>%
+  mutate(across(everything(), ~ str_replace_all(., '"', '')))
+
+country_code
 ```
 
  3. Merge the data sets using the ISO codes.
 ```{r, echo=TRUE}
+country_code$Country <- trimws(country_code$Country)
+country_code$ISO <- trimws(country_code$ISO)
 
-```
-
-```{r, echo=TRUE}
-
-```
-
-```{r, echo=TRUE}
-
+data <- left_join(data, country_code, by = join_by(Country == Country))
+names(data)[names(data) == 'ISO.y'] <- 'ISO'
+data$ISO.x <- NULL
+data
 ```
 # e
 Introduce into the data set information on continent for each country and subcontinent (region). You should
 find a way to gather this data. You can find an appropriate online resource, download the data and merge
 the information with the existing data set. Name the merged data set df_vars.
+```{r, echo=TRUE}
+# I found a dataset on kaggle: https://www.kaggle.com/datasets/andradaolteanu/country-mapping-iso-continent-region?resource=download
+continents <- read.csv("continents2.csv")
+continents
+```
+
+```{r, echo=TRUE}
+
+```
+
