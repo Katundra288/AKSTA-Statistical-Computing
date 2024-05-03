@@ -153,10 +153,35 @@ the information with the existing data set. Name the merged data set df_vars.
 ```{r, echo=TRUE}
 # I found a dataset on kaggle: https://www.kaggle.com/datasets/andradaolteanu/country-mapping-iso-continent-region?resource=download
 continents <- read.csv("continents2.csv")
+
+#despite iso being 'standard' i could not manage to find a dataset that had the same iso column as the one provided from the cia
+#therefore i will use this dataset and merge alpha.2 alpha.3 and country code.
+
+continents <- continents %>%
+  mutate(
+    country.code = str_pad(country.code, width = 3, pad = "0"),
+        # make 4 to 004, 12 to 012, leave 248 
+    ISO = paste(alpha.2, alpha.3, country.code, sep = "|")
+    )
+    #alpha.2 = paste(alpha.2, alpha.3, country.code, sep = "|"))
+  
+names(continents)[names(continents) == 'name'] <- 'Country'
+continents
+continents <- continents[, c("Country", "region", "sub.region", "ISO")]
 continents
 ```
 
 ```{r, echo=TRUE}
+#i will now merge all data that we have
+df_vars <- left_join(data, continents, by = join_by(Country == Country))
+names(df_vars)[names(df_vars) == 'ISO.x'] <- 'ISO'
+df_vars$ISO.y <- NULL
+dim(df_vars) # 227 × 8
+df_vars
 
+#just for the sake of checking things, i get the same output when joining on iso
+df_vars2 <- left_join(data, continents, by = join_by(ISO == ISO))
+dim(df_vars2) # 227 × 9 - double column of country still
+df_vars2
 ```
 
