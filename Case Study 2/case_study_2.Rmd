@@ -177,11 +177,146 @@ df_vars <- left_join(data, continents, by = join_by(Country == Country))
 names(df_vars)[names(df_vars) == 'ISO.x'] <- 'ISO'
 df_vars$ISO.y <- NULL
 dim(df_vars) # 227 × 8
-df_vars
+head(df_vars)
 
 #just for the sake of checking things, i get the same output when joining on iso
-df_vars2 <- left_join(data, continents, by = join_by(ISO == ISO))
-dim(df_vars2) # 227 × 9 - double column of country still
-df_vars2
+#df_vars2 <- left_join(data, continents, by = join_by(ISO == ISO))
+#dim(df_vars2) # 227 × 9 - double column of country still
+#df_vars2
 ```
+
+# f
+Discuss on the tidyness of the data set df_vars. What are the observational units, what are the variables? What can be considered fixed vs measured variables? Tidy the data if needed.
+
+The obtained data set df_vars is almost tidy, while it almost fully satisfies the requirements to the data to be considered tidy: our data set is the collection of quantitative and qualitative values and they are organized in a way, that each value belongs to an observation and a variable. Our data is organized in a way that each row represents an observational unit (a country) and each column is a variable. All our variables have the same unit and measure the same attribute.
+
+In our case the fixed variables are Country (char), region (char), sub.region (char), ISO (char), Income_class (char). The left variables Median_Age (double), Migration_rate (double) and Youth_unemployment_rate (double) are measured variables in our case. Typically, the fixed variables are put in the beginning of the data set, while measured are put after them. So we will perform this small change to have our data perfectly tidy.
+
+Also, since in the following tasks the region will be pointed to as "continent", we decided to rename the name of this variable. 
+
+```{r}
+df_vars <- df_vars %>%
+  select(ISO, Country, region, sub.region, Income_class, Median_Age, Youth_unemployment_rate, Migration_rate)
+
+names(df_vars)[names(df_vars) == "region"] <- "continent"
+
+head(df_vars)
+```
+# g 
+Make a frequency table for the status variable in the merged data set. Briefly comment on the results.
+
+```{r}
+income_status_frequency <- df_vars %>%
+  count(Income_class, name = "frequency") %>%
+  mutate(
+    percentage = 100 * (frequency / sum(frequency))
+  )
+
+print(income_status_frequency)
+
+
+
+```
+From the generated table we can conclude that the high income countries are represented at most, while low income countries at least. The representation of lower-middle and upper-middle income countries are on the same level. Also, a lot of observations (about $19 \%$) are missing the value for the variable Income_class in our data set.
+
+# h
+What is the distribution of income status in the different continents? Compute the absolute frequencies as well as the relative frequency of status within each continent. Briefly comment on the results.
+
+```{r}
+income_distribution_within_continent <- df_vars %>%
+  group_by(continent, Income_class) %>%
+  summarise(frequency = n(), .groups = 'drop')
+
+income_distribution_within_continent <- income_distribution_within_continent %>%
+  group_by(continent) %>%
+  mutate(relative_frequency = frequency / sum(frequency))
+
+print(income_distribution_within_continent)
+
+
+```
+We can conclude that the low and lower-income classes are prevailing in Africa, while the biggest group in Europe and Oceania is high income class. In Asia the lower-middle income class is the biggest one followed by the upper-middle income class. In Americas the prevailing income class is upper-middle and in our data set there is no low income class countries represented. Also, it should be noted that each continent has some countries with no income class specification available (Africa $\approx 4\%$, Americas $\approx 16\%$, Asia $\approx 18\%$, Europe $\approx 13\%$ and Oceania $10\%$). In addition, some countries have values for variable Income_class, while no for continent.  
+
+# i 
+
+From h. identify the countries which are the only ones in their respective group. Explain in few words the output.
+
+```{r}
+unique_countries_in__their_group <- df_vars %>%
+  group_by(continent, Income_class) %>%
+  filter(n() == 1) %>%
+  ungroup()
+
+print(unique_countries_in__their_group)
+```
+
+We can see that Ukraine is the only lower-middle income country in Europe, while the only high income country in Africa is Seychelles and the only low income country is Asia is Afghanistan. 
+
+# j
+For each continent count the number of sub-regions in the data set. How granular are the subcontinents that you employ in the analysis?
+
+```{r}
+sub_region_counts_for_continents <- df_vars %>%
+  group_by(continent) %>%
+  summarise(number_of_sub_regions = n_distinct(sub.region), .groups = 'drop')
+
+print(sub_region_counts_for_continents)
+```
+It is seen that the Asia has the highest granularity, followed by Europe and Oceania, while Africa and Americas are represented only by two sub-regions in our data set. 
+
+
+# k
+Look at the frequency distribution of income status in the subregions of North- and South-Americas. Comment on the results.
+
+```{r}
+income_distribution_americas <- df_vars %>%
+  filter(continent %in% "Americas") %>%
+  group_by(sub.region, Income_class) %>%
+  summarise(frequency = n(), .groups = 'drop') %>%
+  group_by(sub.region) %>%
+  mutate(relative_frequency = frequency / sum(frequency))
+
+print(income_distribution_americas)
+
+```
+We obtained that in the Northern America all countries are high income and also we have one country with no specified income status. In the Southern America prevailing number of countries are upper-middle class income countries, around $24\%$ of countries are high income. 
+
+# l.
+Dig deeper into the low-middle income countries of the Americas. Which ones are they? Are they primarily small island states in the Caribbean? Comment.
+
+```{r}
+low_middle_income_americas <- df_vars %>%
+  filter(continent %in% "Americas" & 
+         Income_class == "LM")
+
+print(low_middle_income_americas)
+
+```
+No, these countries are not island states (except Haiti), however they all except Bolivia have the coastal line. Also, they all are quite differ in terms of the size. 
+
+# m 
+Create a table of average values for median age, youth unemployment rate and net migration rate separated into income status. Make sure that in the output, the ordering of the income classes is proper (i.e., L, LM, UM, H or the other way around). Briefly comment the results.
+
+We will calculate it by ignoring the NA values. Also, we will exclude from the final data frame the values for the observations with no income class specified
+
+```{r}
+table_of_average_values <- df_vars %>%
+  filter(!is.na(Income_class)) %>%
+  mutate(Income_class = factor(Income_class, levels = c("L", "LM", "UM", "H"))) %>%  
+  group_by(Income_class) %>%
+  summarise(
+    Avg_Median_Age = mean(Median_Age, na.rm = TRUE),
+    Avg_Youth_Unemployment_Rate = mean(Youth_unemployment_rate, na.rm = TRUE),
+    Avg_Migration_Rate = mean(Migration_rate, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+print(table_of_average_values)
+
+```
+
+We can trace the growth of the average median age of the population with the drop of the status of country`s income. In addition, we observe that the highest average unemployment youth rate is experienced by the upper-middle status income countries. The high and lower-middle income countries have the same almost the same average unemployment youth and the indicator for low income status countries is the smallest. Average migration rate in countries of all statuses except high income status is negative, being the most negative in countries with upper-middle income status. 
+
+
+
 
