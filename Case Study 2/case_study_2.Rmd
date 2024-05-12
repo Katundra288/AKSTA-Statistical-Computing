@@ -210,7 +210,7 @@ print(income_distribution_within_continent)
 
 
 ```
-We can conclude that the low and lower-income classes are prevailing in Africa, while the biggest group in Europe and Oceania is high income class. In Asia the lower-middle income class is the biggest one followed by the upper-middle income class. In Americas the prevailing income class is upper-middle and in our data set there is no low income class countries represented. Also, it should be noted that each continent has some countries with no income class specification available (Africa $\approx 4\%$, Americas $\approx 16\%$, Asia $\approx 18\%$, Europe $\approx 13\%$ and Oceania $10\%$). In addition, some countries have values for variable Income_class, while no for continent.  
+We can conclude that the low and lower-income classes are prevailing in Africa, while the biggest group in Europe and Oceania is high income class. In Asia the lower-middle income class is the biggest one followed by the upper-middle income class. In Americas the prevailing income class is upper-middle and in our data set there is no low income class countries represented. Also, it should be noted that each continent has some countries with no income class specification available (Africa $\approx 4\%$, Americas $\approx 16\%$, Asia $\approx 18\%$, Europe $\approx 13\%$ and Oceania $10\%$). In addition, some countries have values for variable Income_class, while no value for variable continent.  
 
 # i 
 
@@ -225,7 +225,7 @@ unique_countries_in__their_group <- df_vars %>%
 print(unique_countries_in__their_group)
 ```
 
-We can see that Ukraine is the only lower-middle income country in Europe, while the only high income country in Africa is Seychelles and the only low income country is Asia is Afghanistan. 
+We can see that Ukraine is the only lower-middle income country in Europe, while the only high income country in Africa is Seychelles and the only low income country in Asia is Afghanistan. 
 
 # j
 For each continent count the number of sub-regions in the data set. How granular are the subcontinents that you employ in the analysis?
@@ -267,7 +267,7 @@ low_middle_income_americas <- df_vars %>%
 print(low_middle_income_americas)
 
 ```
-No, these countries are not island states (except Haiti), however they all except Bolivia have the coastal line. Also, they all are quite differ in terms of the size. 
+No, these countries are not island states (except Haiti), however they all except Bolivia have the coastal line. Also, they all are quite different in terms of the size. 
 
 # m 
 Create a table of average values for median age, youth unemployment rate and net migration rate separated into income status. Make sure that in the output, the ordering of the income classes is proper (i.e., L, LM, UM, H or the other way around). Briefly comment the results.
@@ -290,7 +290,7 @@ print(table_of_average_values)
 
 ```
 
-We can trace the growth of the average median age of the population with the drop of the status of country`s income. In addition, we observe that the highest average unemployment youth rate is experienced by the upper-middle status income countries. The high and lower-middle income countries have the same almost the same average unemployment youth and the indicator for low income status countries is the smallest. Average migration rate in countries of all statuses except high income status is negative, being the most negative in countries with upper-middle income status. 
+We can trace the growth of the average median age of the population with the drop of the status of country`s income. In addition, we observe that the highest average unemployment youth rate is experienced by the upper-middle status income countries. The high and lower-middle income countries have almost the same average unemployment youth rate and the indicator for low income status countries is the smallest. Average migration rate in countries of all statuses except high income status is negative, being the most negative in countries with upper-middle income status. 
 
 # n
 Look also at the standard deviation instead of the mean in m. Do you gain additional insights? Briefly comment the results.
@@ -338,7 +338,7 @@ Furthermore, migration patters also differ. We have regions experimenting negati
 Lastly, we have for each L, UM, H classes, an observation with NA values for the continent variable. This is is important to note as it might affect the accuracy of the results.  
 
 # p
-Identify countries which are doing well in terms of both youth unemployment and net migration rate (in thetop 25% of their respective continent in terms of net migration rate and in the bottom 25% of their respective continent in terms of youth unemployment).
+Identify countries which are doing well in terms of both youth unemployment and net migration rate (in the top 25% of their respective continent in terms of net migration rate and in the bottom 25% of their respective continent in terms of youth unemployment).
 
 ```{r}
 top_countries <- df_vars %>%
