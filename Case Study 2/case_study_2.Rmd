@@ -12,7 +12,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Maybe include dataset description here.
 
 ## Task
 
@@ -20,12 +19,7 @@ Maybe include dataset description here.
 Load in R the following data sets which you can find in TUWEL. For each data set, ensure that missing
 values are read in properly, that column names are unambiguous. Each data set should contain at the end
 only two columns: country and the variable.
-
-rawdata_343.txt which contains the (estimated) median age per country. Pay attention! The delimiter
- is 2 or more white spaces (one space would not work as it would separate country names which contain
- a space); you have to skip the first two lines. Hint: you can look into function read.fwf or the readr
- corresponding function. It might also be useful to use tidyr functions to unite some columns back or
- separate them.
+ 
 ```{r, echo=TRUE}
 library(readr)
 library(tidyr)
@@ -39,28 +33,27 @@ require(stringr)
 median_age_data <- read.fwf("rawdata_343.txt", widths = c(8,66,4,18), skip=2) 
 names(median_age_data) <- c("Rank", "Country", "Median_Age")
 median_age_data <- median_age_data[, c("Country", "Median_Age")]
-median_age_data
+head(median_age_data)
 ```
 
 ```{r, echo=TRUE}
-# fwf_widths <- fwf_empty("rawdata_347.txt", skip = 2)
-# fwf_widths did not work
+
 migration_data <- read.fwf("rawdata_347.txt", widths = c(8,64,6,18), skip=2)
 names(migration_data) <- c("Rank", "Country", "Migration_rate", "Date")
 migration_data <- migration_data[, c("Country", "Migration_rate")]
-migration_data
+head(migration_data)
 ```
 
 ```{r, echo=TRUE}
 unemployment_data <- read.csv("rawdata_373.csv")
 names(unemployment_data) <- c("Country", "Youth_unemployment_rate")
-unemployment_data
+head(unemployment_data)
 ```
 # b
 Merge the data sets containing raw data using dplyr function on the unique keys. Keep the union of all
 observations in the tables. What key are you using for merging? Return the dimension of the merged data
 set.
-I use the column "country" for merging - I encountered an issue where the column for migration rate was always NaN so I had to trim the whitespaces.
+We use the column "country" for merging. We encountered an issue where the column for migration rate was always NaN so we had to trim the whitespaces.
  
 ```{r, echo=TRUE}
 median_age_data$Country <- trimws(median_age_data$Country)
@@ -70,9 +63,9 @@ unemployment_data$Country <- trimws(unemployment_data$Country)
 joined <- left_join(median_age_data, unemployment_data, by = join_by(Country))
 joined_data <- left_join(joined, migration_data, by = join_by(Country == Country))
 head(joined_data)
+dim(joined_data)
 ```
 # c
-
 You will acquire more country level information such as the classification of the country based on income.
 Such an information can be found at https://datahelpdesk.worldbank.org/knowledgebase/articles/906519.
 From there extract the classification for 2020 into low/lower-middle/upper-middle/high income countries
@@ -82,15 +75,16 @@ income_data <- read_excel("OGHIST.xlsx", sheet="Country Analytical History", col
 income_data <- income_data[, c("World Bank Analytical Classifications", "...36")]
 income_data <- income_data[11:nrow(income_data), ] 
 names(income_data) <- c("Country", "Income_class")
-income_data
+head(income_data)
 ```
 # d
 Merge this information to the data set in b.
  1. What are the common variables? Can you merge using them? Why or why not?
- I can merge the dataframes on the column Country.
+ 
+ We can merge the dataframes on the column Country.
 ```{r, echo=TRUE}
 data <- left_join(joined_data, income_data, by = join_by(Country == Country))
-data
+head(data)
 ```
  
  2. A reliable merging for countries are ISO codes as they are standardized across data sources. Download the
@@ -98,42 +92,30 @@ data
 data-codes/ and load it into R.
 
 ```{r, echo=TRUE}
-#using read.csv
-#country_code <- read.csv("Country Data Codes.csv", sep = ",", quote = "", stringsAsFactors = FALSE, header = TRUE, fill=TRUE)
-#country_code
-
-#using read_csv
-#country_code <- read_csv("Country Data Codes.csv", col_types = , show_col_types = FALSE,   trim_ws = TRUE)
-#country_code
-
-#using fread
 country_code <- fread("Country Data Codes.csv", sep = ",", header = TRUE, fill=TRUE, stringsAsFactors = FALSE, quote = "")
 names(country_code)[names(country_code) == 'ISO 3166'] <- 'ISO'
 names(country_code)[names(country_code) == 'Name'] <- 'Country'
 
-#new idea - merge columns when col2 contains country name data
 country_code <- country_code %>%
   mutate(
     Country = ifelse(
-      str_detect(GENC, "[a-z]"),  # check for lowercase letters
-      paste(Country, GENC, sep = ", "),  # Concatenate Name and GENC if condition is true
-      Country  # Keep NAme
+      str_detect(GENC, "[a-z]"),  
+      paste(Country, GENC, sep = ", "),
+      Country  
     ),
     GENC = ifelse(
       str_detect(GENC, "[a-z]"),
-      NA,  # Clear GENC if merged
+      NA,  
       GENC
     )
   )
-
-#happy bc we only need Name and ISO columns so i dont have to shift the others
 
 country_code <- country_code[, c("Country", "ISO")]
 
 country_code <- country_code %>%
   mutate(across(everything(), ~ str_replace_all(., '"', '')))
 
-country_code
+head(country_code)
 ```
 
  3. Merge the data sets using the ISO codes.
@@ -144,45 +126,40 @@ country_code$ISO <- trimws(country_code$ISO)
 data <- left_join(data, country_code, by = join_by(Country == Country))
 names(data)[names(data) == 'ISO.y'] <- 'ISO'
 data$ISO.x <- NULL
-data
+head(data)
 ```
 # e
 Introduce into the data set information on continent for each country and subcontinent (region). You should
 find a way to gather this data. You can find an appropriate online resource, download the data and merge
 the information with the existing data set. Name the merged data set df_vars.
-```{r, echo=TRUE}
-# I found a dataset on kaggle: https://www.kaggle.com/datasets/andradaolteanu/country-mapping-iso-continent-region?resource=download
-continents <- read.csv("continents2.csv")
 
-#despite iso being 'standard' i could not manage to find a dataset that had the same iso column as the one provided from the cia
-#therefore i will use this dataset and merge alpha.2 alpha.3 and country code.
+We found this dataset on kaggle: https://www.kaggle.com/datasets/andradaolteanu/country-mapping-iso-continent-region?resource=download
+However, despite ISO being standardized, we could not find a dataset where the ISO layout was the same as the one provided from the previous link.
+For making the merging work, we had to merge 3 columns to create a similar column to ISO from the previous dataframe.
+```{r, echo=TRUE}
+
+continents <- read.csv("continents2.csv")
 
 continents <- continents %>%
   mutate(
     country.code = str_pad(country.code, width = 3, pad = "0"),
-        # make 4 to 004, 12 to 012, leave 248 
+        
     ISO = paste(alpha.2, alpha.3, country.code, sep = "|")
     )
-    #alpha.2 = paste(alpha.2, alpha.3, country.code, sep = "|"))
   
 names(continents)[names(continents) == 'name'] <- 'Country'
-continents
 continents <- continents[, c("Country", "region", "sub.region", "ISO")]
-continents
+head(continents)
 ```
 
 ```{r, echo=TRUE}
-#i will now merge all data that we have
+
 df_vars <- left_join(data, continents, by = join_by(Country == Country))
 names(df_vars)[names(df_vars) == 'ISO.x'] <- 'ISO'
 df_vars$ISO.y <- NULL
-dim(df_vars) # 227 × 8
+dim(df_vars) 
 head(df_vars)
 
-#just for the sake of checking things, i get the same output when joining on iso
-#df_vars2 <- left_join(data, continents, by = join_by(ISO == ISO))
-#dim(df_vars2) # 227 × 9 - double column of country still
-#df_vars2
 ```
 
 # f
@@ -213,8 +190,6 @@ income_status_frequency <- df_vars %>%
   )
 
 print(income_status_frequency)
-
-
 
 ```
 From the generated table we can conclude that the high income countries are represented at most, while low income countries at least. The representation of lower-middle and upper-middle income countries are on the same level. Also, a lot of observations (about $19 \%$) are missing the value for the variable Income_class in our data set.
