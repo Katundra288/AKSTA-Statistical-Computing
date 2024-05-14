@@ -26,6 +26,7 @@ library(tidyr)
 library(dplyr)
 library(readxl)
 library(data.table)
+library(knitr)
 require(stringr)
 ```  
  
@@ -33,7 +34,7 @@ require(stringr)
 median_age_data <- read.fwf("rawdata_343.txt", widths = c(8,66,4,18), skip=2) 
 names(median_age_data) <- c("Rank", "Country", "Median_Age")
 median_age_data <- median_age_data[, c("Country", "Median_Age")]
-head(median_age_data)
+head(kable(median_age_data))
 ```
 
 ```{r, echo=TRUE}
@@ -41,13 +42,13 @@ head(median_age_data)
 migration_data <- read.fwf("rawdata_347.txt", widths = c(8,64,6,18), skip=2)
 names(migration_data) <- c("Rank", "Country", "Migration_rate", "Date")
 migration_data <- migration_data[, c("Country", "Migration_rate")]
-head(migration_data)
+head(kable(migration_data))
 ```
 
 ```{r, echo=TRUE}
 unemployment_data <- read.csv("rawdata_373.csv")
 names(unemployment_data) <- c("Country", "Youth_unemployment_rate")
-head(unemployment_data)
+head(kable(unemployment_data))
 ```
 # b
 Merge the data sets containing raw data using dplyr function on the unique keys. Keep the union of all
@@ -70,11 +71,16 @@ You will acquire more country level information such as the classification of th
 Such an information can be found at https://datahelpdesk.worldbank.org/knowledgebase/articles/906519.
 From there extract the classification for 2020 into low/lower-middle/upper-middle/high income countries
  
-```{r, echo=TRUE}
-income_data <- read_excel("OGHIST.xlsx", sheet="Country Analytical History", col_names = TRUE)
+```{r}
+suppressMessages({
+  income_data <- read_excel("OGHIST.xlsx", sheet="Country Analytical History", col_names = TRUE)
+})
 income_data <- income_data[, c("World Bank Analytical Classifications", "...36")]
 income_data <- income_data[11:nrow(income_data), ] 
 names(income_data) <- c("Country", "Income_class")
+```
+
+```{r, echo=TRUE}
 head(income_data)
 ```
 # d
