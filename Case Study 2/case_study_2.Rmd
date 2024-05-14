@@ -351,9 +351,9 @@ top_countries <- df_vars %>%
   group_by(continent) %>%
   mutate(
     top_migration = quantile(Migration_rate, 0.75, na.rm = TRUE),
-    bottom_unempoyment = quantile(Youth_unemployment_rate, 0.25, na.rm = TRUE)
+    bottom_unemployment = quantile(Youth_unemployment_rate, 0.25, na.rm = TRUE)
   ) %>%
-  filter(Migration_rate >= top_migration & Youth_unemployment_rate <= bottom_unempoyment) %>%
+  filter(Migration_rate >= top_migration & Youth_unemployment_rate <= bottom_unemployment) %>%
   select(Country, continent, Migration_rate, Youth_unemployment_rate)
 
 
