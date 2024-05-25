@@ -1,0 +1,228 @@
+"ISO";"Country";"continent";"sub.region";"Income_class";"Median_Age";"Youth_unemployment_rate";"Migration_rate"
+"MC|MCO|492";"Monaco";"Europe";"Western Europe";"H";55.4;26.6;8.3
+"JP|JPN|392";"Japan";"Asia";"Eastern Asia";"H";48.6;3.6;0
+"PM|SPM|666";"Saint Pierre and Miquelon";"Americas";"Northern America";.;48.5;.;-7.7
+"DE|DEU|276";"Germany";"Europe";"Western Europe";"H";47.8;6.2;1.5
+"IT|ITA|380";"Italy";"Europe";"Southern Europe";"H";46.5;32.2;3.2
+"AD|AND|020";"Andorra";"Europe";"Southern Europe";"H";46.2;.;0
+"HK|HKG|344";"Hong Kong";"Asia";"Eastern Asia";.;45.6;8.7;1.7
+"BL|BLM|652";"Saint Barthelemy";.;.;.;45.6;.;-3
+"GR|GRC|300";"Greece";"Europe";"Southern Europe";"H";45.3;39.9;0.9
+"SM|SMR|674";"San Marino";"Europe";"Southern Europe";"H";45.2;27.4;6.6
+"SI|SVN|705";"Slovenia";"Europe";"Southern Europe";"H";44.9;8.8;1.5
+"IM|IMN|833";"Isle of Man";"Europe";"Northern Europe";"H";44.6;10.1;5.2
+"PT|PRT|620";"Portugal";"Europe";"Southern Europe";"H";44.6;20.3;0.3
+"AT|AUT|040";"Austria";"Europe";"Western Europe";"H";44.5;9.4;3.6
+"LT|LTU|440";"Lithuania";"Europe";"Northern Europe";"H";44.5;11.1;-5.9
+"LV|LVA|428";"Latvia";"Europe";"Northern Europe";"H";44.4;12.2;-5.9
+"GG|GGY|831";"Guernsey";"Europe";"Northern Europe";.;44.3;.;1.9
+"HR|HRV|191";"Croatia";"Europe";"Southern Europe";"H";43.9;23.7;-1
+"ES|ESP|724";"Spain";"Europe";"Southern Europe";"H";43.9;34.3;7
+"BG|BGR|100";"Bulgaria";"Europe";"Eastern Europe";"UM";43.7;12.7;-0.3
+"EE|EST|233";"Estonia";"Europe";"Northern Europe";"H";43.7;11.8;-3.1
+"LI|LIE|438";"Liechtenstein";"Europe";"Western Europe";"H";43.7;.;4.9
+"BM|BMU|060";"Bermuda";"Americas";"Northern America";"H";43.6;29.3;1.6
+"HU|HUN|348";"Hungary";"Europe";"Eastern Europe";"H";43.6;10.2;1.3
+"PR|PRI|630";"Puerto Rico";"Americas";"Latin America and the Caribbean";"H";43.6;26.6;-14.1
+"RS|SRB|688";"Serbia";"Europe";"Southern Europe";"UM";43.4;29.7;0
+"BA|BIH|070";"Bosnia and Herzegovina";.;.;"UM";43.3;33.8;-0.4
+"CZ|CZE|203";"Czechia";.;.;.;43.3;6.7;2.3
+"KOR";"Korea, South";.;.;.;43.2;10.2;2.3
+.;"Saint Helena, Ascension, and Tristan da Cunha";.;.;.;43.2;.;0
+"FI|FIN|246";"Finland";"Europe";"Northern Europe";"H";42.8;17;2.6
+"NL|NLD|528";"Netherlands";"Europe";"Western Europe";"H";42.8;7.2;1.9
+"CH|CHE|756";"Switzerland";"Europe";"Western Europe";"H";42.7;7.9;4.6
+"RO|ROU|642";"Romania";"Europe";"Eastern Europe";"UM";42.5;16.2;-0.2
+"MT|MLT|470";"Malta";"Europe";"Southern Europe";"H";42.3;9.1;6.6
+"TW|TWN|158";"Taiwan";"Asia";"Eastern Asia";.;42.3;.;0.8
+"CU|CUB|192";"Cuba";"Americas";"Latin America and the Caribbean";"UM";42.1;6.1;-3.7
+"DK|DNK|208";"Denmark";"Europe";"Northern Europe";"H";42;9.4;2.8
+"PL|POL|616";"Poland";"Europe";"Eastern Europe";"H";41.9;11.7;-0.3
+"CA|CAN|124";"Canada";"Americas";"Northern America";"H";41.8;11.1;5.6
+"SK|SVK|703";"Slovakia";"Europe";"Eastern Europe";.;41.8;14.9;0.2
+"VI|VIR|850";"Virgin Islands";.;.;.;41.8;.;-7.5
+"FR|FRA|250";"France";"Europe";"Western Europe";"H";41.7;20.8;1.1
+"BE|BEL|056";"Belgium";"Europe";"Western Europe";"H";41.6;15.8;4.8
+"UA|UKR|804";"Ukraine";"Europe";"Eastern Europe";"LM";41.2;17.9;2.3
+"SX|SXM|534";"Sint Maarten";.;.;.;41.1;.;6
+"SE|SWE|752";"Sweden";"Europe";"Northern Europe";"H";41.1;16.8;5.2
+"BY|BLR|112";"Belarus";"Europe";"Eastern Europe";"UM";40.9;10.6;0.7
+"MO|MAC|446";"Macau";.;.;.;40.8;5.3;3.3
+"GB|GBR|826";"United Kingdom";"Europe";"Northern Europe";"H";40.6;11.3;2.5
+"KY|CYM|136";"Cayman Islands";"Americas";"Latin America and the Caribbean";"H";40.5;13.8;13
+"RU|RUS|643";"Russia";"Europe";"Eastern Europe";.;40.3;17;1.7
+"AW|ABW|533";"Aruba";"Americas";"Latin America and the Caribbean";"H";39.9;.;8.4
+"ME|MNE|499";"Montenegro";"Europe";"Southern Europe";"UM";39.6;29.4;-4.9
+"BB|BRB|052";"Barbados";"Americas";"Latin America and the Caribbean";"H";39.5;29.6;-0.3
+"LU|LUX|442";"Luxembourg";"Europe";"Western Europe";"H";39.5;14.2;13.3
+"NO|NOR|578";"Norway";"Europe";"Northern Europe";"H";39.5;9.7;4
+.;"Macedonia";"Europe";"Southern Europe";.;39;45.4;0.4
+"TH|THA|764";"Thailand";"Asia";"South-eastern Asia";"UM";39;3.7;0
+"GE|GEO|268";"Georgia";"Asia";"Western Asia";"UM";38.6;29.9;0.1
+"US|USA|840";"United States";"Americas";"Northern America";"H";38.5;8.6;3
+"CN|CHN|156";"China";"Asia";"Eastern Asia";"UM";38.4;.;-0.4
+"AE|ARE|784";"United Arab Emirates";"Asia";"Western Asia";"H";38.4;6.9;7.6
+"CK|COK|184";"Cook Islands";"Oceania";"Polynesia";.;38.3;.;-29.9
+"CY|CYP|196";"Cyprus";"Asia";"Western Asia";"H";37.9;20.2;7.6
+"IE|IRL|372";"Ireland";"Europe";"Northern Europe";"H";37.8;13.8;3.9
+"TT|TTO|780";"Trinidad and Tobago";"Americas";"Latin America and the Caribbean";"H";37.8;8.7;-5.4
+"MD|MDA|498";"Moldova";"Europe";"Eastern Europe";"UM";37.7;7.4;-9
+"AU|AUS|036";"Australia";"Oceania";"Australia and New Zealand";"H";37.5;11.8;8.1
+"JE|JEY|832";"Jersey";"Europe";"Northern Europe";.;37.5;.;2.3
+"VG|VGB|092";"British Virgin Islands";.;.;"H";37.2;.;15.5
+"FO|FRO|234";"Faroe Islands";"Europe";"Northern Europe";.;37.2;.;0
+"NZ|NZL|554";"New Zealand";"Oceania";"Australia and New Zealand";"H";37.2;11.5;8
+"IS|ISL|352";"Iceland";"Europe";"Northern Europe";"H";37.1;6.1;3.3
+"LC|LCA|662";"Saint Lucia";"Americas";"Latin America and the Caribbean";.;36.9;46.2;-1.7
+"SC|SYC|690";"Seychelles";"Africa";"Sub-Saharan Africa";"H";36.8;11.6;1
+"CW|CUW|531";"Curacao";.;.;.;36.7;29.3;-1.3
+"AM|ARM|051";"Armenia";"Asia";"Western Asia";"UM";36.6;36.3;-5.5
+"KN|KNA|659";"Saint Kitts and Nevis";"Americas";"Latin America and the Caribbean";.;36.5;.;1.2
+"MU|MUS|480";"Mauritius";"Africa";"Sub-Saharan Africa";"UM";36.3;23.9;0
+"AI|AIA|660";"Anguilla";"Americas";"Latin America and the Caribbean";.;35.7;.;11.1
+"SG|SGP|702";"Singapore";"Asia";"South-eastern Asia";"H";35.6;9.1;11.8
+"CL|CHL|152";"Chile";"Americas";"Latin America and the Caribbean";"H";35.5;18.1;0.3
+"GI|GIB|292";"Gibraltar";"Europe";"Southern Europe";"H";35.5;.;-3.3
+"UY|URY|858";"Uruguay";"Americas";"Latin America and the Caribbean";"H";35.5;25.9;-0.9
+"VC|VCT|670";"Saint Vincent and the Grenadines";"Americas";"Latin America and the Caribbean";.;35.3;.;-7.2
+"DM|DMA|212";"Dominica";"Americas";"Latin America and the Caribbean";"UM";34.9;.;-5.3
+"MS|MSR|500";"Montserrat";"Americas";"Latin America and the Caribbean";.;34.8;.;0
+"PRK";"Korea, North";.;.;.;34.6;.;0
+"TC|TCA|796";"Turks and Caicos Islands";"Americas";"Latin America and the Caribbean";"H";34.6;.;8.9
+"AL|ALB|008";"Albania";"Europe";"Southern Europe";"UM";34.3;31.9;-3.3
+"GL|GRL|304";"Greenland";"Americas";"Northern America";"H";34.3;.;-6
+"WF|WLF|876";"Wallis and Futuna";"Oceania";"Polynesia";.;34;.;-4.3
+"PW|PLW|585";"Palau";"Oceania";"Micronesia";"H";33.9;5.6;0.9
+"LB|LBN|422";"Lebanon";"Asia";"Western Asia";"UM";33.7;.;-88.7
+"QA|QAT|634";"Qatar";"Asia";"Western Asia";"H";33.7;0.4;6.5
+"LK|LKA|144";"Sri Lanka";"Asia";"Southern Asia";"LM";33.7;21;-1.3
+"PF|PYF|258";"French Polynesia";"Oceania";"Polynesia";"H";33.3;56.7;-0.7
+"GD|GRD|308";"Grenada";"Americas";"Latin America and the Caribbean";"UM";33.3;.;-2.6
+"MF|MAF|663";"Saint Martin";.;.;.;33.3;.;-6
+"BR|BRA|076";"Brazil";"Americas";"Latin America and the Caribbean";"UM";33.2;28.5;-0.1
+"BH|BHR|048";"Bahrain";"Asia";"Western Asia";"H";32.9;5.3;10.6
+"NC|NCL|540";"New Caledonia";"Oceania";"Melanesia";"H";32.9;38.4;3.8
+"BHS";"Bahamas, The";.;.;"H";32.8;25.8;0
+"MP|MNP|580";"Northern Mariana Islands";"Oceania";"Micronesia";"H";32.8;.;-15.4
+"AG|ATG|028";"Antigua and Barbuda";"Americas";"Latin America and the Caribbean";"H";32.7;.;2.1
+"TN|TUN|788";"Tunisia";"Africa";"Northern Africa";"LM";32.7;35;-1.4
+"AZ|AZE|031";"Azerbaijan";"Asia";"Western Asia";"UM";32.6;13.4;0
+"CR|CRI|188";"Costa Rica";"Americas";"Latin America and the Caribbean";"UM";32.6;20.6;0.8
+"AR|ARG|032";"Argentina";"Americas";"Latin America and the Caribbean";"UM";32.4;23.7;-0.1
+.;"Turkey";"Asia";"Western Asia";.;32.2;20.2;-4.3
+"VN|VNM|704";"Vietnam";"Asia";"South-eastern Asia";"LM";31.9;6.9;-0.3
+"IR|IRN|364";"Iran";"Asia";"Southern Asia";.;31.7;27.6;-0.3
+"KZ|KAZ|398";"Kazakhstan";"Asia";"Central Asia";"UM";31.6;3.8;0.4
+"CO|COL|170";"Colombia";"Americas";"Latin America and the Caribbean";"UM";31.2;18.5;-0.6
+"BN|BRN|096";"Brunei";.;.;.;31.1;28.9;2.3
+"ID|IDN|360";"Indonesia";"Asia";"South-eastern Asia";"LM";31.1;16.5;-1.1
+"SR|SUR|740";"Suriname";"Americas";"Latin America and the Caribbean";"UM";31;13.4;0.5
+"SA|SAU|682";"Saudi Arabia";"Asia";"Western Asia";"H";30.8;28.8;4.7
+"XK|XKS|";"Kosovo";.;.;"UM";30.5;55.4;-1.8
+"IL|ISR|376";"Israel";"Asia";"Western Asia";"H";30.4;7.2;2.1
+"PA|PAN|591";"Panama";"Americas";"Latin America and the Caribbean";"UM";30.1;10.2;-0.1
+"UZ|UZB|860";"Uzbekistan";"Asia";"Central Asia";"LM";30.1;.;-1.9
+"VE|VEN|862";"Venezuela";"Americas";"Latin America and the Caribbean";.;30;14.6;-3.4
+"FJ|FJI|242";"Fiji";"Oceania";"Melanesia";"UM";29.9;15.4;-6.2
+"MN|MNG|496";"Mongolia";"Asia";"Eastern Asia";"LM";29.8;16.8;-0.8
+"KW|KWT|414";"Kuwait";"Asia";"Western Asia";"H";29.7;15.4;-3.3
+"PY|PRY|600";"Paraguay";"Americas";"Latin America and the Caribbean";"UM";29.7;14.5;-0.1
+"MV|MDV|462";"Maldives";"Asia";"Southern Asia";"UM";29.5;15.9;-12.7
+"GU|GUM|316";"Guam";"Oceania";"Micronesia";"H";29.4;29.4;-11
+"JM|JAM|388";"Jamaica";"Americas";"Latin America and the Caribbean";"UM";29.4;24.2;-9.4
+"MX|MEX|484";"Mexico";"Americas";"Latin America and the Caribbean";"UM";29.3;6.9;-1.9
+"MM|MMR|104";"Burma";.;.;.;29.2;2;-1.4
+"MY|MYS|458";"Malaysia";"Asia";"South-eastern Asia";"UM";29.2;10.5;-0.3
+"TM|TKM|795";"Turkmenistan";"Asia";"Central Asia";"UM";29.2;.;-1.7
+"BT|BTN|064";"Bhutan";"Asia";"Southern Asia";"LM";29.1;10.7;0
+"MA|MAR|504";"Morocco";"Africa";"Northern Africa";"LM";29.1;22.2;-1.9
+"PE|PER|604";"Peru";"Americas";"Latin America and the Caribbean";"UM";29.1;14.7;-1.8
+"DZ|DZA|012";"Algeria";"Africa";"Northern Africa";"LM";28.9;39.3;-0.9
+"EC|ECU|218";"Ecuador";"Americas";"Latin America and the Caribbean";"UM";28.8;7.9;0
+"IN|IND|356";"India";"Asia";"Southern Asia";"LM";28.7;22.5;0
+"ZA|ZAF|710";"South Africa";"Africa";"Sub-Saharan Africa";"UM";28;53.4;-0.2
+"BD|BGD|050";"Bangladesh";"Asia";"Southern Asia";"LM";27.9;12.8;-3
+"DO|DOM|214";"Dominican Republic";"Americas";"Latin America and the Caribbean";"UM";27.9;13.5;-2.7
+"SV|SLV|222";"El Salvador";"Americas";"Latin America and the Caribbean";"LM";27.7;9.6;-4.8
+"GY|GUY|328";"Guyana";"Americas";"Latin America and the Caribbean";"UM";27.5;21.5;0
+"KG|KGZ|417";"Kyrgyzstan";"Asia";"Central Asia";.;27.3;14.2;-5
+"NI|NIC|558";"Nicaragua";"Americas";"Latin America and the Caribbean";"LM";27.3;8.5;-2.4
+"AS|ASM|016";"American Samoa";"Oceania";"Polynesia";"UM";27.2;.;-26.1
+"NR|NRU|520";"Nauru";"Oceania";"Micronesia";"H";27;26.6;-11.3
+"CV|CPV|132";"Cabo Verde";"Africa";"Sub-Saharan Africa";"LM";26.8;27.8;-0.6
+"TV|TUV|798";"Tuvalu";"Oceania";"Polynesia";"UM";26.6;20.6;-6.5
+"KH|KHM|116";"Cambodia";"Asia";"South-eastern Asia";"LM";26.4;1.1;-0.3
+"FSM";"Micronesia, Federated States of";.;.;.;26.3;18.9;-20.9
+"OM|OMN|512";"Oman";"Asia";"Western Asia";"H";26.2;13.7;-0.4
+"LY|LBY|434";"Libya";"Africa";"Northern Africa";"UM";25.8;48.7;-0.7
+"BW|BWA|072";"Botswana";"Africa";"Sub-Saharan Africa";"UM";25.7;36;2.9
+"KI|KIR|296";"Kiribati";"Oceania";"Micronesia";"LM";25.7;17.1;-2.8
+"WS|WSM|882";"Samoa";"Oceania";"Polynesia";"LM";25.6;31.9;-8.1
+"BO|BOL|068";"Bolivia";"Americas";"Latin America and the Caribbean";"LM";25.3;6.9;-0.3
+"NP|NPL|524";"Nepal";"Asia";"Southern Asia";"LM";25.3;21.4;-3.1
+"TJ|TJK|762";"Tajikistan";"Asia";"Central Asia";"LM";25.3;.;-1.1
+"DJ|DJI|262";"Djibouti";"Africa";"Sub-Saharan Africa";"LM";24.9;.;5.1
+"LS|LSO|426";"Lesotho";"Africa";"Sub-Saharan Africa";"LM";24.7;34.4;-6.1
+"HN|HND|340";"Honduras";"Americas";"Latin America and the Caribbean";"LM";24.4;10.7;-1.4
+"EG|EGY|818";"Egypt";"Africa";"Northern Africa";.;24.1;29.6;-0.3
+"HT|HTI|332";"Haiti";"Americas";"Latin America and the Caribbean";"LM";24.1;.;-1.9
+"PH|PHL|608";"Philippines";"Asia";"South-eastern Asia";"LM";24.1;6.7;-1.8
+"TO|TON|776";"Tonga";"Oceania";"Polynesia";"UM";24.1;.;-17.9
+"LA|LAO|418";"Laos";"Asia";"South-eastern Asia";.;24;18.2;-1
+"PG|PNG|598";"Papua New Guinea";"Oceania";"Melanesia";"LM";24;3.6;0
+"BZ|BLZ|084";"Belize";"Americas";"Latin America and the Caribbean";"LM";23.9;15.3;-1
+"MH|MHL|584";"Marshall Islands";"Oceania";"Micronesia";"UM";23.8;11;-4.5
+"SZ|SWZ|748";"Eswatini";"Africa";"Sub-Saharan Africa";"LM";23.7;47.1;-6.8
+"JO|JOR|400";"Jordan";"Asia";"Western Asia";"UM";23.5;35.6;-11.3
+"SB|SLB|090";"Solomon Islands";"Oceania";"Melanesia";"LM";23.5;1.3;-1.6
+"SY|SYR|760";"Syria";"Asia";"Western Asia";.;23.5;35.8;27.1
+"GT|GTM|320";"Guatemala";"Americas";"Latin America and the Caribbean";"UM";23.2;5;-1.7
+"VU|VUT|548";"Vanuatu";"Oceania";"Melanesia";"LM";23;.;-1.3
+"PK|PAK|586";"Pakistan";"Asia";"Southern Asia";"LM";22;7.8;-0.9
+"PS|PSE|275";"West Bank";.;.;.;21.9;42.2;-4.2
+"GMB";"Gambia, The";.;.;"L";21.8;13.1;-1.6
+"NA|NAM|516";"Namibia";"Africa";"Sub-Saharan Africa";"UM";21.8;38;0
+"GH|GHA|288";"Ghana";"Africa";"Sub-Saharan Africa";"LM";21.4;9.1;-1.6
+"IQ|IRQ|368";"Iraq";"Asia";"Western Asia";"UM";21.2;25.6;-0.5
+"GA|GAB|266";"Gabon";"Africa";"Sub-Saharan Africa";"UM";21;35.7;3.9
+"MR|MRT|478";"Mauritania";"Africa";"Sub-Saharan Africa";"LM";21;15.2;-0.8
+"KM|COM|174";"Comoros";"Africa";"Sub-Saharan Africa";"LM";20.9;19.5;-2.3
+"ZW|ZWE|716";"Zimbabwe";"Africa";"Sub-Saharan Africa";"LM";20.5;16.5;-5
+"CI|CIV|384";"Cote d'Ivoire";.;.;.;20.3;5.5;1.2
+"GQ|GNQ|226";"Equatorial Guinea";"Africa";"Sub-Saharan Africa";"UM";20.3;.;0
+"ER|ERI|232";"Eritrea";"Africa";"Sub-Saharan Africa";"L";20.3;.;-11.6
+"MG|MDG|450";"Madagascar";"Africa";"Sub-Saharan Africa";"L";20.3;1;0
+"CF|CAF|140";"Central African Republic";"Africa";"Sub-Saharan Africa";"L";20;.;0
+"KE|KEN|404";"Kenya";"Africa";"Sub-Saharan Africa";"LM";20;7.4;-0.2
+"TG|TGO|768";"Togo";"Africa";"Sub-Saharan Africa";"L";20;3.9;0
+"ET|ETH|231";"Ethiopia";"Africa";"Sub-Saharan Africa";"L";19.8;25.2;-0.2
+"YE|YEM|887";"Yemen";"Asia";"Western Asia";.;19.8;24.5;-0.2
+"RW|RWA|646";"Rwanda";"Africa";"Sub-Saharan Africa";"L";19.7;20.6;-3.3
+"TL|TLS|626";"Timor-Leste";"Asia";"South-eastern Asia";"LM";19.6;13.2;-3.9
+"AF|AFG|004";"Afghanistan";"Asia";"Southern Asia";"L";19.5;17.6;-0.1
+"COG";"Congo, Republic of the";.;.;.;19.5;.;-0.9
+"SN|SEN|686";"Senegal";"Africa";"Sub-Saharan Africa";"LM";19.4;8.1;-1.3
+"ST|STP|678";"Sao Tome and Principe";"Africa";"Sub-Saharan Africa";.;19.3;20.8;-7.9
+"GN|GIN|324";"Guinea";"Africa";"Sub-Saharan Africa";"L";19.1;1;0
+"SL|SLE|694";"Sierra Leone";"Africa";"Sub-Saharan Africa";"L";19.1;9.4;-1.2
+"NG|NGA|566";"Nigeria";"Africa";"Sub-Saharan Africa";"LM";18.6;13.8;-0.2
+"SS|SSD|728";"South Sudan";"Africa";"Sub-Saharan Africa";"L";18.6;38.6;0.2
+"CM|CMR|120";"Cameroon";"Africa";"Sub-Saharan Africa";"LM";18.5;6.3;-0.3
+"SO|SOM|706";"Somalia";"Africa";"Sub-Saharan Africa";"L";18.5;.;-3.8
+"SD|SDN|729";"Sudan";"Africa";"Northern Africa";"L";18.3;.;-0.4
+"TZ|TZA|834";"Tanzania";"Africa";"Sub-Saharan Africa";"LM";18.2;3.9;-0.4
+"PS|PSE|275";"Gaza Strip";.;.;.;18;42.2;-4.7
+"GW|GNB|624";"Guinea-Bissau";.;.;"L";18;.;-3.8
+"LR|LBR|430";"Liberia";"Africa";"Sub-Saharan Africa";"L";18;2.3;-2.9
+"BF|BFA|854";"Burkina Faso";"Africa";"Sub-Saharan Africa";"L";17.9;8.7;-0.6
+"BI|BDI|108";"Burundi";"Africa";"Sub-Saharan Africa";"L";17.7;2.9;-0.8
+"BJ|BEN|204";"Benin";"Africa";"Sub-Saharan Africa";"LM";17;5.6;0.3
+"MZ|MOZ|508";"Mozambique";"Africa";"Sub-Saharan Africa";"L";17;7.4;-1.7
+"ZM|ZMB|894";"Zambia";"Africa";"Sub-Saharan Africa";"LM";16.9;24;0
+"MW|MWI|454";"Malawi";"Africa";"Sub-Saharan Africa";"L";16.8;40.5;0
+"COD";"Congo, Democratic Republic of the";.;.;.;16.7;8.7;-0.9
+"TD|TCD|148";"Chad";"Africa";"Sub-Saharan Africa";"L";16.1;.;-0.1
+"ML|MLI|466";"Mali";"Africa";"Sub-Saharan Africa";"L";16;16.9;-3.9
+"AO|AGO|024";"Angola";"Africa";"Sub-Saharan Africa";"LM";15.9;39.4;-0.2
+"UG|UGA|800";"Uganda";"Africa";"Sub-Saharan Africa";"L";15.7;14.8;-3.5
+"NE|NER|562";"Niger";"Africa";"Sub-Saharan Africa";"L";14.8;0.7;-0.7
