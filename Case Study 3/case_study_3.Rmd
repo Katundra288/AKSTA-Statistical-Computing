@@ -197,12 +197,125 @@ median_migration_plot <- ggplot(median_migration, aes(x = median_migration_rate,
 
 print(median_migration_plot)
 ```
-The plot shows us that majority of regions have median net migration rate between -2 and 0. The most negative median migration rate is possessed by Polynesia and Micronesia subregions, while the most positive by Australia and New Zealand. Western and Northern Europe also has relatively high positive median migration rate. 
+The plot shows us that majority of regions have median net migration rate between -2 and 0. The most negative median migration rate is possessed by Polynesia and Micronesia subregions, while the most positive by Australia and New Zealand. Western and Northern Europe also has relatively high positive median migration rate.
+
+## g. Median youth unemployment rate per subcontinent
+
+```{r}
+
+median_unemployment <- clean_data_present_continent %>%
+  group_by(sub.region) %>%
+  summarise(median_unemployment_rate = median(Youth_unemployment_rate, na.rm = TRUE),
+            continent = first(continent)) %>%
+  ungroup() %>%
+  mutate(sub.region = fct_reorder(sub.region, median_unemployment_rate))
+
+median_unemployment_barplot <- ggplot(median_unemployment, aes(x = median_unemployment_rate,
+  y = sub.region, fill = continent)) +
+  geom_bar(stat = "identity", alpha = 0.7) +
+  labs(x = "Median Youth Unemployment Rate", y = "Sub-Region", fill = "Continent") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "top")
+
+print(median_unemployment_barplot)
+
+```
+We can see that Northern Africa has significantly the highest youth unemployment rate, followed by Polynesia, in Oceania and Southern Europe. Central Asia and South-eastern Asia have the lowest rates. Moreover, we can also notice variation within the continents. Oceania and Europe show a broader range or the median youth unemployment rates.
+
+## h. Median youth unemployment rate per subcontinent – with error bars
+
+```{r}
+
+iqr_unemployment <- clean_data_present_continent %>%
+  group_by(sub.region) %>%
+  summarise(
+    Q1 = quantile(Youth_unemployment_rate, 0.25, na.rm = TRUE),
+    Q3 = quantile(Youth_unemployment_rate, 0.75, na.rm = TRUE)
+  )
+
+median_iqr_unemployment <- merge(median_unemployment, iqr_unemployment, by = "sub.region")
+
+ggplot(median_iqr_unemployment, aes(x = median_unemployment_rate, y = sub.region, color = continent)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = Q1, ymax = Q3), width = 0.2) +
+  labs(x = "Median Youth Unemployment Rate", y = "Sub-Region", color = "Continent") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+```
+Sub-regions with shorter bars, like Northern Europe or Central Asia, have more consistency in the rates, while sub-regions with longer bars, such as Western Asia or Sub-Saharan Africa, indicate a wider variation in the youth unemployment rates. We can also, see some trends, for instance, European sub-regions have generally higher rates, while sub-regions in Oceania show high variability in the unemployment rates.
+
+
+## i. Relationship between median age and net migration rate
+
+```{r}
+
+ggplot(clean_data, aes(x = Median_Age, y = Migration_rate, color = Income_class)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Median Age", y = "Net Migration Rate", color = "Income Status") +
+  theme_minimal()
+
+```
+Based on the plot, it seems that the high-income countries have a positive correlation between the median age and net migration rate. There also appear to be some variability for the rest of the categories when it comes to the net migration rates. 
+In general, we see that as the median age increases, the net migration rate also tends to increase, particularly in the high income category, suggesting that in countries with older population, having more migrants coming is needed for the workforce. 
+
+## j. Relationship between youth unemployment and net migration rate
 
 
 
+```{r}
+
+unemployment_migration_plot <- ggplot(clean_data_present_continent, 
+                                      aes(x = Youth_unemployment_rate, 
+                                          y = Migration_rate, 
+                                          color = continent)) +
+  geom_point(size = 3, alpha = 0.7) +  
+  geom_smooth(method = "lm", se = FALSE) +  
+  labs(x = "Youth Unemployment Rate", 
+       y = "Net Migration Rate", 
+       color = "Continent") +
+  scale_color_brewer(palette = "Set1") +  
+  theme_minimal() +
+  theme(legend.position = "top")
+
+# Print the plot
+print(unemployment_migration_plot)
+
+```
 
 
+
+## k. Merging population data
+ Data got from https://databank.worldbank.org/source/population-estimates-and-projections#
+
+```{r}
+
+population_data <- read.csv("population_data.csv")
+
+population_data <- population_data %>%
+  select(Country.Code, Population = X2020..YR2020.)
+
+head(population_data)
+
+```
+```{r}
+
+clean_data_present_continent <- clean_data_present_continent %>%
+  mutate(ISO_Code_3 = str_extract(ISO, "\\|([A-Z]{3})\\|") %>%
+           str_remove_all("\\|"))
+
+head(clean_data_present_continent)
+```
+
+```{r}
+merged_data <- clean_data_present_continent %>%
+  left_join(population_data, by = c("ISO_Code_3" = "Country.Code"))
+
+head(merged_data)
+```
 
 
 
