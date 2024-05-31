@@ -8,6 +8,7 @@ date: "2024-05-25"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
