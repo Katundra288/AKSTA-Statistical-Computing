@@ -1,11 +1,13 @@
 ---
 title: "Case Study 3 AKSTA Statistical Computing"
 author:
-  - Hanna Kienast
-  - Iulia Mihaela Enache
-  - Kateryna Ponomarenko
+- Hanna Kienast
+- Iulia Mihaela Enache
+- Kateryna Ponomarenko
 date: "2024-05-25"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -22,6 +24,12 @@ library(data.table)
 library(knitr)
 require(stringr)
 library(ggplot2)
+library(plotly)
+library(htmltools)
+library(GGally)
+library(installr)
+library(scales)
+library(rworldmap)
 ```  
  
 In our csv the missing values are represented by dot character ".", so we will specify it when parsing. 
@@ -314,8 +322,70 @@ head(clean_data_present_continent)
 merged_data <- clean_data_present_continent %>%
   left_join(population_data, by = c("ISO_Code_3" = "Country.Code"))
 
+merged_data$Population <- as.numeric(as.character(merged_data$Population))
 head(merged_data)
 ```
+## l. Scatterplot of median age and net migration rate in Europe
+```{r}
+europe_data <- merged_data %>% 
+               filter(continent == "Europe")
+head(europe_data)
 
+scatterplot_age_umeployment <- ggplot(europe_data, aes(x = Median_Age, y = Migration_rate, size = Population)) + 
+  geom_point(alpha = 0.7) + 
+  labs(
+    title="Scatterplot Median Age and Migration Rate Europe",
+    x = "Median Age",
+    y = "Migration Rate"
+  ) +
+  theme(legend.position = "none")
 
+print(scatterplot_age_umeployment)
+```
+Without a legend we can't make statements about certain countries. But we can see that for most European countries the median age is between 40 and 47. These countries also mostly have a migration rate of 0 to 5 percent. That means that for most European countries migration has a small positive or no effect on the population. Within this group are also the most populous European countries. The outliers are mostly countries with a tiny population.
 
+## m. Interactive plot
+```{r}
+world_plot_l <- ggplot(merged_data, aes(x = Median_Age, y = Migration_rate, size = Population, color = as.factor(continent), text = Country)) + 
+  geom_point(alpha = 0.7) + 
+  labs(
+    title = "Scatterplot of Median Age and Migration Rate for all Countries",
+    x = "Median Age",
+    y = "Migration Rate",
+    size = "Population",
+    color = "continent",
+  ) +
+  theme(legend.position = "none")
+
+interactive_plot_l <- ggplotly(world_plot_l, tooltip = c("text", "x", "y", "size"))
+interactive_plot_l
+
+```
+
+## n. Parallel coordinate plot
+```{r}
+ggparcoord(merged_data, 
+           columns = c("Median_Age", "Youth_unemployment_rate", "Migration_rate"),
+           groupColumn = "Income_class",
+           order = 6:8,
+           showPoints = TRUE,
+           scale = "globalminmax",
+           title = "Parallel Coordinate Plot of all Countries",
+           alphaLines = 0.5)
+
+```
+
+In the creation of the plot we tried different scalings to give a better view on these many datapoints. To also keep the values make sense, we decided on "globalminmax". We can make statements about the data by Income class. Countries with high income tend to have rather low youth unempolment (however with some considerable outliers) and a rather high migration rate. Countries with upper middle, lower middle and low income tend to not have a trend for youth unemployment, for migration rate these countries make up the lower half of values, to rates from lower one digit numbers to negative values.
+
+## o. World map visualisation
+```{r}
+data(countryExData)
+
+merged_o <- countryExData %>%
+  left_join(merged_data, by = c("ISO3V10" = "ISO_Code_3"))
+
+sPDF <-joinCountryData2Map(merged_o)
+
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF, nameColumnToPlot="Median_Age", mapTitle="Median Age by Country", catMethod="fixedWidth", missingCountryCol="gray50")
+```
