@@ -73,6 +73,8 @@ density_plot <- ggplot(clean_data, aes(x = Median_Age, fill = Income_class)) +
 
 print(density_plot)
 ```
+
+
 The plot demonstrates that the low-income countries have the smallest spread of median age of the population, while countries of other income statutes have the wider spread. Also, high level income countries tend to have the highest median age among represented categories, indicating an older population, while the opposite situation is observed for countries of low income. Overall, we can spot a tendency that the higher income level country has, the higher median age of population it owns. 
 
 ## b. Income status in different continents
@@ -90,7 +92,9 @@ absolute_freq_barplot <- ggplot(clean_data_present_continent, aes(x = continent,
 print(absolute_freq_barplot)
 
 ```
-We can see that Africa has the greatest number of low-income countries and the lowest proportion of high-income countries among all other continents. Additionally to Africa, only Asia has one low-income country represented. Europe has the highest number of high-income countries and only one lower-middle income country. Oceania has equal number of lower- and upper- middle countries (10 each) but the highest number (17) is of high-income countries. Prevailing countries in Amerias is upper-middle income countries. 
+
+
+We can see that Africa has the greatest number of low-income countries and the lowest number of high-income countries among all other continents. Additionally to Africa, only Asia has one low-income country represented. Europe has the highest number of high-income countries and only one lower-middle income country. Oceania has equal number of lower- and upper- middle countries (10 each) but the highest number (17) is of high-income countries. Prevailing countries in Americas are upper-middle income countries. 
 
 Create another stacked barplot of relative frequencies (height of the bars should be one). 
 ```{r}
@@ -102,6 +106,8 @@ relative_freq_plot <- ggplot(clean_data_present_continent, aes(x = continent, fi
 
 print(relative_freq_plot)
 ```
+
+
 This plot gives us a better understanding of proportion of each income class countries for each continent. Now it is easier to determine that for example over 75\% countries in Europe are high-income countries, while in Asia - around 26\% 
 
 Create a mosaic plot of continents and income status using base R functions.
@@ -112,7 +118,9 @@ mosaicplot(table(clean_data_present_continent$continent,
            xlab = "Continent",
            ylab = "Income Class")
 ```
-Overall, each plot offers a different perspective on the data, making it easier to understand the distribution of income statuses across continents. The barplot of absolute frequencies provides absolute viewpoints, allowing to detect the exact number of countries on some continent in specific category. The barplot of relative frequencies provides relative viewpoints, allowing to detect the proportion of countries of some status on the continent. The mosaic plot adds an additional layer of understanding by visualizing the relationship between the two categorical variables ().
+
+
+Overall, each plot offers a different perspective on the data, making it easier to understand the distribution of income statuses across continents. The barplot of absolute frequencies provides absolute viewpoints, allowing to detect the exact number of countries on some continent in specific category. The barplot of relative frequencies provides relative viewpoints, allowing to detect the proportion of countries of some status on the continent. The mosaic plot adds an additional layer of understanding by visualizing the relationship between the two categorical variables (continent and income class in our case).
 
 ## c. Income status in different subcontinents
 
@@ -142,6 +150,8 @@ print(relative_freq_plot_asia)
 
 
 ```
+
+
 Plot demonstrates that the highest proportion of high-income countries is in Western Asia, while there are no high-income countries in Southern and Central Asia at all. The prevailing countries in Southern Asia are of lower-middle income level. In Central Asia there is an even distribution between lower- and upper- middle income countries. 
 
 ## d. Net migration in different continents
@@ -161,6 +171,7 @@ print(boxplot_migration)
 cat("Largest Negative Outlier in Asia:", asia_largest_negative_outlier, "\n")
 cat("Largest Positive Outlier in Asia:", asia_largest_positive_outlier, "\n")
 ```
+
 We can see that Asia has some severe outliers, which were detected (Singapore and Lebanon), while other countries also have outlying values but not to such high extent as Asia. All continents have more countries with negative migration rate except Europe where number of countries with positive and negative migration rates is balanced. Prevailing number of countries in Oceania have negative migration rate. 
 
 ## e. Net migration in different subcontinents
@@ -182,6 +193,8 @@ print(migration_boxplot)
 
 
 ```
+
+
 Now we see more information about which regions on the continent experience prevailing negative/positive migration rate. For example, now we can clearer detect that Micronesia and Polynesia in majority have countries with negative migration rate, and that migration rate in Northern America is in general higher than the in Latin America and the Caribbean. 
 
 ## f. Median net migration rate per subcontinent
@@ -206,7 +219,9 @@ median_migration_plot <- ggplot(median_migration, aes(x = median_migration_rate,
 
 print(median_migration_plot)
 ```
-The plot shows us that majority of regions have median net migration rate between -2 and 0. The most negative median migration rate is possessed by Polynesia and Micronesia subregions, while the most positive by Australia and New Zealand. Western and Northern Europe also has relatively high positive median migration rate.
+
+
+The plot shows us that majority of regions have median net migration rate between -2 and 0. The most negative median migration rate is possessed by Polynesia and Micronesia subregions, while the most positive by Australia and New Zealand. Western and Northern Europe also have relatively high positive median migration rate.
 
 ## g. Median youth unemployment rate per subcontinent
 
@@ -230,6 +245,8 @@ median_unemployment_barplot <- ggplot(median_unemployment, aes(x = median_unempl
 print(median_unemployment_barplot)
 
 ```
+
+
 We can see that Northern Africa has significantly the highest youth unemployment rate, followed by Polynesia, in Oceania and Southern Europe. Central Asia and South-eastern Asia have the lowest rates. Moreover, we can also notice variation within the continents. Oceania and Europe show a broader range or the median youth unemployment rates.
 
 ## h. Median youth unemployment rate per subcontinent – with error bars
@@ -254,6 +271,8 @@ ggplot(median_iqr_unemployment, aes(x = median_unemployment_rate, y = sub.region
   theme(legend.position = "top")
 
 ```
+
+
 Sub-regions with shorter bars, like Northern Europe or Central Asia, have more consistency in the rates, while sub-regions with longer bars, such as Western Asia or Sub-Saharan Africa, indicate a wider variation in the youth unemployment rates. We can also, see some trends, for instance, European sub-regions have generally higher rates, while sub-regions in Oceania show high variability in the unemployment rates.
 
 
@@ -268,6 +287,8 @@ ggplot(clean_data, aes(x = Median_Age, y = Migration_rate, color = Income_class)
   theme_minimal()
 
 ```
+
+
 Based on the plot, it seems that the high-income countries have a positive correlation between the median age and net migration rate. There also appear to be some variability for the rest of the categories when it comes to the net migration rates. 
 In general, we see that as the median age increases, the net migration rate also tends to increase, particularly in the high income category, suggesting that in countries with older population, having more migrants coming is needed for the workforce. 
 
@@ -343,6 +364,8 @@ scatterplot_age_umeployment <- ggplot(europe_data, aes(x = Median_Age, y = Migra
 
 print(scatterplot_age_umeployment)
 ```
+
+
 Without a legend we can't make statements about certain countries. But we can see that for most European countries the median age is between 40 and 47. These countries also mostly have a migration rate of 0 to 5 percent. That means that for most European countries migration has a small positive or no effect on the population. Within this group are also the most populous European countries. The outliers are mostly countries with a tiny population.
 
 ## m. Interactive plot
@@ -376,7 +399,8 @@ ggparcoord(merged_data,
 
 ```
 
-In the creation of the plot we tried different scalings to give a better view on these many datapoints. To also keep the values make sense, we decided on "globalminmax". We can make statements about the data by Income class. Countries with high income tend to have rather low youth unempolment (however with some considerable outliers) and a rather high migration rate. Countries with upper middle, lower middle and low income tend to not have a trend for youth unemployment, for migration rate these countries make up the lower half of values, to rates from lower one digit numbers to negative values.
+
+In the creation of the plot we tried different scalings to give a better view on these many datapoints. To also keep the values make sense, we decided on "globalminmax". We can make statements about the data by Income class. Countries with high income tend to have rather low youth unemployment (however with some considerable outliers) and a rather high migration rate. Countries with upper middle, lower middle and low income tend to not have a trend for youth unemployment, for migration rate these countries make up the lower half of values, to rates from lower one digit numbers to negative values.
 
 ## o. World map visualisation
 ```{r}
