@@ -280,7 +280,7 @@ Sub-regions with shorter bars, like Northern Europe or Central Asia, have more c
 
 ```{r}
 
-ggplot(clean_data, aes(x = Median_Age, y = Migration_rate, color = Income_class)) +
+ggplot(clean_data_present_continent, aes(x = Median_Age, y = Migration_rate, color = Income_class)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Median Age", y = "Net Migration Rate", color = "Income Status") +
@@ -294,28 +294,16 @@ In general, we see that as the median age increases, the net migration rate also
 
 ## j. Relationship between youth unemployment and net migration rate
 
-
-
 ```{r}
 
-unemployment_migration_plot <- ggplot(clean_data_present_continent, 
-                                      aes(x = Youth_unemployment_rate, 
-                                          y = Migration_rate, 
-                                          color = continent)) +
-  geom_point(size = 3, alpha = 0.7) +  
-  geom_smooth(method = "lm", se = FALSE) +  
-  labs(x = "Youth Unemployment Rate", 
-       y = "Net Migration Rate", 
-       color = "Continent") +
-  scale_color_brewer(palette = "Set1") +  
-  theme_minimal() +
-  theme(legend.position = "top")
-
-# Print the plot
-print(unemployment_migration_plot)
+ggplot(clean_data_present_continent, aes(x = Youth_unemployment_rate, y = Migration_rate, color = Income_class)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Youth Unemployment Rate", y = "Net Migration Rate", color = "Income Status") +
+  theme_minimal()
 
 ```
-
+We can observe that high-income and low-income countries have a slight negative correlation, suggesting that in these countries, as youth unemployment increases, the net migration rate tends to decrease slightly. For the other two income groups, we see a flat or slightly positive trend line. These weak relationships might imply that there is not a strong relationship between youth unemployment and net migration rate and that other factors also influence migration patterns.
 
 
 ## k. Merging population data
@@ -347,6 +335,7 @@ merged_data <- clean_data_present_continent %>%
 merged_data$Population <- as.numeric(as.character(merged_data$Population))
 head(merged_data)
 ```
+
 ## l. Scatterplot of median age and net migration rate in Europe
 ```{r}
 europe_data <- merged_data %>% 
