@@ -42,7 +42,7 @@ ui <- fluidPage(
              )
     ),
     tabPanel("Multivariate analysis"
-           
+             
     )
   )
 )
@@ -61,7 +61,7 @@ server <- function(input, output, session) {
   
   output$map_plot <- renderPlotly({
     req(input$univariate)
-        p <- ggplot(merged_data, aes(x = long, y = lat, group = group, fill = get(input$univariate), text = country)) +
+    p <- ggplot(merged_data, aes(x = long, y = lat, group = group, fill = get(input$univariate), text = country)) +
       geom_polygon(color = "white") +
       scale_fill_viridis_c() +
       labs(fill = input$univariate) +
@@ -71,7 +71,7 @@ server <- function(input, output, session) {
   })
   
   
-
+  
 }
 
 shinyApp(ui = ui, server = server)
