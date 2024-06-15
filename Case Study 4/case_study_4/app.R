@@ -41,11 +41,42 @@ ui <- fluidPage(
                )
              )
     ),
-    tabPanel("Multivariate analysis"
+    tabPanel("Multivariate analysis" ,
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("multivariate_var1", "Select variable 1:",
+                             choices = c("Median Age" = "median_age", 
+                                         "Youth Unemployment Rate" = "youth_unempl_rate", 
+                                         "Net Migration Rate" = "net_migr_rate", 
+                                         "Population Growth Rate" = "pop_growth_rate", 
+                                         "Electricity from Fossil Fuels" = "electricity_fossil_fuel", 
+                                         "Life Expectancy" = "life_expectancy")),
+                 selectInput("multivariate_var2", "Select variable 2:",
+                             choices = c("Median Age" = "median_age", 
+                                         "Youth Unemployment Rate" = "youth_unempl_rate", 
+                                         "Net Migration Rate" = "net_migr_rate", 
+                                         "Population Growth Rate" = "pop_growth_rate", 
+                                         "Electricity from Fossil Fuels" = "electricity_fossil_fuel", 
+                                         "Life Expectancy" = "life_expectancy")),
+                 selectInput("multivariate_scale", "Scale points by:",
+                             choices = c("Area" = "area",
+                                         "Population" = "population"))
+                   
+                ),
+             mainPanel(
+               tabsetPanel(
+                 tabPanel("Scatterplot", plotlyOutput("scatterplot") #if you want we can also delete the "Scatterplot" so it is 100% the task pic
+                   
+                 )
+                 
+               )
+               
+             )
              
-    )
-  )
-)
+            )
+    ) #tabpanel
+  ) #tabsetpanel
+) #ui
 
 server <- function(input, output, session) {
   
@@ -69,6 +100,27 @@ server <- function(input, output, session) {
     
     ggplotly(p, tooltip = c("text", input$univariate))
   })
+  
+  output$scatterplot <- renderPlotly({
+    req(input$multivariate_var1)
+    req(input$multivariate_var2)
+    req(input$multivariate_scale)
+    sp <- ggplot(merged_data, aes_string( 
+                                   x = input$multivariate_var1, 
+                                   y = input$multivariate_var2, 
+                                   size = input$multivariate_scale,
+                                   text = "country",
+                                   color = "continent" )) +
+      geom_point(alpha=0.7) +
+      labs(
+        title = paste("Scatterplot of", input$multivariate_var1, "and", input$multivariate_var2, "scaled by", input$multivariate_scale), #hope the title is fine?
+        x = input$multivariate_var1,
+        y = input$multivariate_var2,
+        color = "continent"
+      ) +
+      theme_minimal()
+    ggplotly(sp, tooltip = c(input$multivariate_var1, input$multivariate_var2, input$multivariate_scale, "text")) #strangely the order is different in the app
+  }) 
   
   
   
