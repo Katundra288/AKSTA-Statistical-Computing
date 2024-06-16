@@ -6,6 +6,7 @@ library(DT)
 library(countrycode)
 library(maps)
 library(jsonlite)
+library(shinyjs)
 
 data_cia <- fromJSON("data_cia.json")
 
@@ -15,6 +16,9 @@ world_map$ISO3 <- countrycode::countrycode(sourcevar = world_map$region, origin 
 merged_data <- left_join(world_map, data_cia, by = "ISO3")
 
 ui <- fluidPage(
+  useShinyjs(),
+  includeCSS("styles.css"),
+  
   titlePanel("CIA World Factbook 2020"),
   p("Welcome to my shiny app, which allows you to visualize variables from the CIA factbook on the world map, generate descriptive statistics and statistical graphics"),
   
@@ -90,6 +94,33 @@ server <- function(input, output, session) {
     head(selected_data(), 15)
   })
   
+  output$boxplot_overall <- renderPlotly({
+    req(input$univariate)
+    data_filtered <- data_cia %>% filter(!is.na(continent))
+    p <- ggplot(data_filtered, aes(x = "", y = get(input$univariate))) +
+      geom_boxplot() +
+      labs(y = input$univariate, x = "") +
+      theme_minimal() +
+      theme_grey()
+    
+    ggplotly(p)
+  })
+  
+  output$boxplot_continent <- renderPlotly({
+    req(input$univariate)
+    data_filtered <- data_cia %>% filter(!is.na(continent))
+    p <- ggplot(data_filtered, aes(x = continent, y = get(input$univariate), fill = continent)) +
+      geom_boxplot() +
+      labs(y = input$univariate, x = "Continent") +
+      theme_minimal() +
+      theme_grey() +
+      theme(legend.position = "none")
+    
+    ggplotly(p)
+  })
+  
+
+  
   output$map_plot <- renderPlotly({
     req(input$univariate)
     p <- ggplot(merged_data, aes(x = long, y = lat, group = group, fill = get(input$univariate), text = country)) +
@@ -105,7 +136,8 @@ server <- function(input, output, session) {
     req(input$multivariate_var1)
     req(input$multivariate_var2)
     req(input$multivariate_scale)
-    sp <- ggplot(merged_data, aes_string( 
+    data_filtered <- data_cia %>% filter(!is.na(continent))
+    sp <- ggplot(data_filtered, aes_string( 
                                    x = input$multivariate_var1, 
                                    y = input$multivariate_var2, 
                                    size = input$multivariate_scale,
@@ -118,7 +150,8 @@ server <- function(input, output, session) {
         y = input$multivariate_var2,
         color = "continent"
       ) +
-      theme_minimal()
+      theme_minimal()+
+      theme_grey()
     ggplotly(sp, tooltip = c(input$multivariate_var1, input$multivariate_var2, input$multivariate_scale, "text")) #strangely the order is different in the app
   }) 
   
