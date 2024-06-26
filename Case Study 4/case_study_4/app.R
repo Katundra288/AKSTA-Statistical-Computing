@@ -15,6 +15,15 @@ world_map$ISO3 <- countrycode::countrycode(sourcevar = world_map$region, origin 
 
 merged_data <- left_join(world_map, data_cia, by = "ISO3")
 
+variable_names <- list(
+  "median_age" = "Median Age",
+  "youth_unempl_rate" = "Youth Unemployment Rate",
+  "net_migr_rate" = "Net Migration Rate",
+  "pop_growth_rate" = "Population Growth Rate",
+  "electricity_fossil_fuel" = "Electricity (Fossil Fuel)",
+  "life_expectancy" = "Life Expectancy"
+)
+
 ui <- fluidPage(
   useShinyjs(),
   includeCSS("styles.css"),
@@ -31,7 +40,7 @@ ui <- fluidPage(
                                          "Youth Unemployment Rate" = "youth_unempl_rate", 
                                          "Net Migration Rate" = "net_migr_rate", 
                                          "Population Growth Rate" = "pop_growth_rate", 
-                                         "Electricity from Fossil Fuels" = "electricity_fossil_fuel", 
+                                         "Electricity (Fossil Fuels)" = "electricity_fossil_fuel", 
                                          "Life Expectancy" = "life_expectancy")),
                  actionButton("view_data", "View Raw Data"),
                  dataTableOutput("raw_data")
@@ -53,14 +62,14 @@ ui <- fluidPage(
                                          "Youth Unemployment Rate" = "youth_unempl_rate", 
                                          "Net Migration Rate" = "net_migr_rate", 
                                          "Population Growth Rate" = "pop_growth_rate", 
-                                         "Electricity from Fossil Fuels" = "electricity_fossil_fuel", 
+                                         "Electricity (Fossil Fuels)" = "electricity_fossil_fuel", 
                                          "Life Expectancy" = "life_expectancy")),
                  selectInput("multivariate_var2", "Select variable 2:",
                              choices = c("Median Age" = "median_age", 
                                          "Youth Unemployment Rate" = "youth_unempl_rate", 
                                          "Net Migration Rate" = "net_migr_rate", 
                                          "Population Growth Rate" = "pop_growth_rate", 
-                                         "Electricity from Fossil Fuels" = "electricity_fossil_fuel", 
+                                         "Electricity (Fossil Fuels)" = "electricity_fossil_fuel", 
                                          "Life Expectancy" = "life_expectancy")),
                  selectInput("multivariate_scale", "Scale points by:",
                              choices = c("Area" = "area",
@@ -91,7 +100,9 @@ server <- function(input, output, session) {
   # Raw data output
   output$raw_data <- renderDataTable({
     req(input$view_data)
-    head(selected_data(), 15)
+    df <- selected_data()
+    colnames(df)[3] <- variable_names[[input$univariate]]
+    head(df, 15)
   })
   
   output$boxplot_overall <- renderPlotly({
@@ -126,7 +137,7 @@ server <- function(input, output, session) {
     p <- ggplot(merged_data, aes(x = long, y = lat, group = group, fill = get(input$univariate), text = country)) +
       geom_polygon(color = "white") +
       scale_fill_viridis_c() +
-      labs(fill = input$univariate) +
+      labs(fill = variable_names[[input$univariate]]) +
       theme_void()
     
     ggplotly(p, tooltip = c("text", input$univariate))
