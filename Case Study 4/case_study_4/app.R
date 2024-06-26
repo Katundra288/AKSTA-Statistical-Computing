@@ -7,6 +7,8 @@ library(countrycode)
 library(maps)
 library(jsonlite)
 library(shinyjs)
+library('rsconnect')
+
 
 data_cia <- fromJSON("data_cia.json")
 
