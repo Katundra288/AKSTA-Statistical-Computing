@@ -9,6 +9,9 @@ library(jsonlite)
 library(shinyjs)
 library('rsconnect')
 
+# Link to the app on shinyapps.io
+# https://akstacasestudy.shinyapps.io/case_study_4/
+
 
 data_cia <- fromJSON("data_cia.json")
 
